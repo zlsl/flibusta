@@ -1,0 +1,255 @@
+.whb {
+	background-color: #fff;
+}
+
+section title {
+    display: block;
+
+}
+
+.block {
+    width: 100%;
+    background: #faf4ea;
+    padding: 0.3rem 0.3rem;
+    border: 1px solid #e4dcd8;
+    position: relative;
+}
+
+.block h3 {
+    margin: 0 0 10px;
+}
+
+
+.authors-list {
+    margin-bottom: 10px;
+}
+
+.block .info {
+    color: #542a00;
+    margin-bottom: 5px;
+    font-size: 14px;
+    line-height: 20px;
+}
+
+
+.info dt {
+    float: left;
+    clear: left;
+    color: #000;
+    margin: 0 3px 0 0;
+}
+
+.bottom-line {
+    border-top: 1px dashed #e4dcd8;
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+
+.author {
+    line-height: 1.3em;
+    padding-right: 4px;
+    padding-left: 4px;
+    border-radius: 2px;
+    text-decoration: none;
+    margin: 2px 4px 2px 0;
+    color: #542a00;
+    padding: 2px;
+}
+
+section {
+	text-align: justify;
+}
+
+section p {
+	text-indent: 2em;
+}
+
+section title {
+	text-align: center;
+	font-weight: bold;
+	font-size: 1.5 em;
+}
+
+a:hover, a:visited, a:link, a:active {
+	text-decoration: none;
+}
+h3 {
+	color: #334455;
+	text-decoration: none;
+}
+
+.book-link {
+	color: #542a00;
+}
+.card-body {
+	padding: 0.3rem 0.3rem;
+}
+
+h4 {
+	margin-bottom: .1rem;
+}
+
+.cover {
+	box-shadow: 0 .125rem .25rem rgba(0,0,0,.9)!important;
+	max-height: 400px;
+}
+
+.book {
+	text-align: justify;
+}
+
+
+canvas {
+	width: 100%;
+}
+
+.epub-view {
+	width: 100% !important;
+}
+
+.epub-view iframe {
+	width: 100% !important;
+
+}
+
+.divider {
+	position: relative;
+	margin-top: 1em;
+	margin-bottom: 1em;
+	height: 1px;
+}
+
+.div-transparent:before {
+	content: "";
+	position: absolute;
+	top: 0;
+	left: 5%;
+	right: 5%;
+	width: 90%;
+	height: 1px;
+	background-image: linear-gradient(to right, transparent, rgb(48,49,51), transparent);
+}
+
+.div-arrow-down:after {
+	content: "";
+	position: absolute;
+	z-index: 1;
+	top: -7px;
+	left: calc(50% - 7px);
+	width: 14px;
+	height: 14px;
+	transform: rotate(45deg);
+	background-color: white;
+	border-bottom: 1px solid rgb(48,49,51);
+	border-right: 1px solid rgb(48,49,51);
+}
+
+.div-tab-down:after {
+	content: "";
+	position: absolute;
+	z-index: 1;
+	top: 0;
+	left: calc(50% - 10px);
+	width: 20px;
+	height: 14px;
+	background-color: white;
+	border-bottom: 1px solid rgb(48,49,51);
+	border-left: 1px solid rgb(48,49,51);
+	border-right: 1px solid rgb(48,49,51);
+	border-radius: 0 0 8px 8px;
+}
+
+.div-stopper:after {
+	content: "";
+	position: absolute;
+	z-index: 1;
+	top: -6px;
+	left: calc(50% - 7px);
+	width: 14px;
+	height: 12px;
+	background-color: white;
+	border-left: 1px solid rgb(48,49,51);
+	border-right: 1px solid rgb(48,49,51);
+}
+
+.div-dot:after {
+	content: "";
+	position: absolute;
+	z-index: 1;
+	top: -9px;
+	left: calc(50% - 9px);
+	width: 18px;
+	height: 18px;
+	background-color: #aaa ;
+	border: 1px solid rgb(48,49,51);
+	border-radius: 50%;
+	box-shadow: inset 0 0 0 2px white,
+					0 0 0 4px white;
+}
+
+title  {
+	text-shadow: 0 2px white, 0 3px #777;
+	margin: 1em 0 0.5em 0;
+	color: #343434;
+	font-family: 'Open Sans Condensed', sans-serif;
+	font-size: 1.5em;
+	line-height: 1.8em;
+	text-align: center;
+	text-transform: uppercase;
+}
+
+section section title {
+	font-size: 18px;
+	line-height: 20px;
+	margin: 0;
+	text-shadow: none;
+	text-transform: none;
+	text-align: left;
+	border-top-left-radius: .25rem!important;
+	border-top-right-radius: .25rem!important;
+	background: #ddd;
+	display: inline-block;
+	padding: 0.25em;
+	border-top: 1px solid #ddd;
+	border-right: 1px solid #ddd;
+	border-left: 1px solid #ddd;
+}
+
+section1 section p {
+	padding: 0.5em;
+	border: 1px solid #ddd;
+	border-bottom-left-radius: .25rem!important;
+	border-bottom-right-radius: .25rem!important;
+	border-top-right-radius: .25rem!important;
+	background: #eee;
+}
+
+.reader p {
+	font-family: Sentinel SSm A,Sentinel SSm B,system-ui,-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Helvetica,Arial,sans-serif,Apple Color Emoji,Segoe UI Emoji,Segoe UI Symbol;
+	font-size: 1.2rem;
+	font-weight: 400;
+	line-height: 1.7;
+	color: #333;
+	font-family: sans-serif;
+	margin-bottom: 15px;
+}
+
+.fx {
+	display: block;
+	margin-bottom: 0.5em;
+
+}
+
+    .epub-container {
+      min-width: 320px;
+      margin: 0 auto;
+      position: relative;
+    }
+
+    .epub-container .epub-view > iframe {
+        background: white;
+        box-shadow: 0 0 4px #ccc;
+        /*margin: 10px;
+        padding: 20px;*/
+    }
+
