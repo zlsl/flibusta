@@ -16,7 +16,7 @@ if ($handle = opendir('/application/flibusta')) {
 	$dbh->beginTransaction();
 
 	while (false !== ($entry = readdir($handle))) {   
-	        if (strpos($entry, "-") && strpos($entry, ".zip")) {
+		if (strpos($entry, "-") !== false && strpos($entry, ".zip") !== false && substr($entry, -9) !== ".zip.part") {
         		$dt = str_replace(".zip", "", $entry);
 		        $dt = str_replace("f.n.", "f.n-", $dt);
         		$dt = str_replace("f.fb2.", "f.n-", $dt);
