@@ -18,7 +18,7 @@ services:
         working_dir: /application
         volumes:
             - './application:/application'
-            - 'cache:/application/cache'
+            - './cache:/application/cache'
             - './Flibusta.Net:/application/flibusta'
             - './FlibustaSQL/lib.a.attached.zip:/application/cache/lib.a.attached.zip'
             - './FlibustaSQL/lib.b.attached.zip:/application/cache/lib.b.attached.zip'
@@ -31,7 +31,7 @@ services:
         working_dir: /application
         volumes:
             - './application:/application'
-            - 'cache:/application/cache'
+            - './cache:/application/cache'
             - './FlibustaSQL/lib.a.attached.zip:/application/cache/lib.a.attached.zip'
             - './FlibustaSQL/lib.b.attached.zip:/application/cache/lib.b.attached.zip'
             - './Flibusta.Net:/application/flibusta'
@@ -40,4 +40,3 @@ services:
 
 volumes:
     db-data:
-    cache:
