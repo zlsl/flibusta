@@ -14,16 +14,21 @@ if (isset($a->file)) {
 }
 echo "<a class='btn btn-primary mt-2 w-100' href='/?aid=$a->avtorid'>Книги автора</a>";
 
-$stmt = $dbh->prepare("SELECT COUNT(*) cnt FROM fav WHERE user_uuid=:uuid AND avtorid=:id");
-$stmt->bindParam(":uuid", $user_uuid);
-$stmt->bindParam(":id", $a->avtorid);
-$stmt->execute();
-$is_fav = ($stmt->fetch()->cnt > 0);
-if (!$is_fav) {
-	echo "<a class='btn btn-secondary mt-2 w-100' href='/?fav_author=$a->avtorid'>В избранное</a>";
-} else {
-	echo "<a class='btn btn-warning mt-2 w-100' href='/?unfav_author=$a->avtorid'>Из избранного</a>";
+try {
+	$stmt = $dbh->prepare("SELECT COUNT(*) cnt FROM fav WHERE user_uuid=:uuid AND avtorid=:id");
+	$stmt->bindParam(":uuid", $user_uuid);
+	$stmt->bindParam(":id", $a->avtorid);
+	$stmt->execute();
+	$is_fav = ($stmt->fetch()->cnt > 0);
+	if (!$is_fav) {
+		echo "<a class='btn btn-secondary mt-2 w-100' href='/?fav_author=$a->avtorid'>В избранное</a>";
+	} else {
+		echo "<a class='btn btn-warning mt-2 w-100' href='/?unfav_author=$a->avtorid'>Из избранного</a>";
+	}
+} catch (PDOException $e) {
+	//
 }
+
 echo "</div>";
 echo "<div class='col-sm-10 mb-3'>";
 

@@ -40,8 +40,13 @@ if (isset($_SESSION['user_uuid'])) {
 	$user_uuid = $_SESSION['user_uuid'];
 	$stmt = $dbh->prepare("SELECT * FROM fav_users WHERE user_uuid=:uuid");
 	$stmt->bindParam(":uuid", $user_uuid);
-	$stmt->execute();
-	$user = $stmt->fetch();
+	try {
+		$stmt->execute();
+		$user = $stmt->fetch();
+	} catch (PDOException $e) {
+		//
+	}
+	
 	if (isset($user->name)) {
 		$user_name = $user->name;
 

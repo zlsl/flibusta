@@ -5,7 +5,12 @@ $stmt = $dbh->prepare("SELECT *
 		LEFT JOIN libapics USING(AvtorId)
 		WHERE user_uuid=:uuid AND avtorid IS NOT NULL");
 $stmt->bindParam(":uuid", $user_uuid);
-$stmt->execute();
+
+try {
+	$stmt->execute();
+} catch (PDOException $e) {
+	//
+}
 
 echo '<div class="row">';
 while ($a = $stmt->fetch()) {
