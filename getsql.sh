@@ -1,6 +1,5 @@
 #!/bin/sh
 wget --directory-prefix=FlibustaSQL -c -nc http://flibusta.is/sql/lib.libavtor.sql.gz
-wget --directory-prefix=FlibustaSQL -c -nc http://flibusta.is/sql/lib.libavtoraliase.sql.gz
 wget --directory-prefix=FlibustaSQL -c -nc http://flibusta.is/sql/lib.libtranslator.sql.gz
 wget --directory-prefix=FlibustaSQL -c -nc http://flibusta.is/sql/lib.libavtorname.sql.gz
 wget --directory-prefix=FlibustaSQL -c -nc http://flibusta.is/sql/lib.libbook.sql.gz
