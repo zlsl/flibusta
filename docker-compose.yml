@@ -4,7 +4,7 @@ services:
         build: phpdocker/pg
         working_dir: /application
         volumes:
-            - './db:/var/lib/postgresql/data'
+            - 'db-data:/var/lib/postgresql/data'
             - './application:/application'
         environment:
             - POSTGRES_USER=flibusta
@@ -37,3 +37,6 @@ services:
             - './Flibusta.Net:/application/flibusta'
             - './FlibustaSQL:/application/sql'
             - './phpdocker/php-fpm/php-ini-overrides.ini:/etc/php/7.4/fpm/conf.d/99-overrides.ini'
+
+volumes:
+    db-data:
