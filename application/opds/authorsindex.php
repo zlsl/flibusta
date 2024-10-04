@@ -7,9 +7,9 @@
  <link href="/search?q={searchTerms}" rel="search" type="application/atom+xml" />
  <link href="/" rel="start" type="application/atom+xml;profile=opds-catalog" />
 <?php
-$ai = DB::query("SELECT SUBSTR(LastName, 1, 1) alpha, COUNT(*) cnt FROM libavtorname GROUP BY SUBSTR(LastName, 1, 1) ORDER BY LastName");
 
-while ($ach = $ai->fetch_object()) {
+$ai = $dbh->query("SELECT SUBSTR(LastName, 1, 1) alpha, COUNT(*) cnt FROM libavtorname GROUP BY SUBSTR(LastName, 1, 1) ORDER BY LastName");
+while ($ach = $ai->fetchObject()) {
 	echo "<entry> <updated>2019-02-08T18:11:21+01:00</updated>";
 	echo "<id>tag:authors:$ach->aplha</id>";
 	echo "<title>$ach->alpha</title>";

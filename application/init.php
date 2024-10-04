@@ -5,6 +5,7 @@ define('BOOKS_PAGE', 10);
 define('AUTHORS_PAGE', 50);
 define('SERIES_PAGE', 50);
 define('OPDS_FEED_COUNT', 100);
+define('COUNT_BOOKS', true);
 include(ROOT_PATH . 'functions.php');
 
 try {
