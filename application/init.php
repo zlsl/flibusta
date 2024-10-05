@@ -19,12 +19,12 @@ if (!$dbpasswd)
 	$dbpasswd = getenv('FLIBUSTA_DBPASSWORD')?getenv('FLIBUSTA_DBPASSWORD'):'flibusta';
 
 $dbtype = getenv('FLIBUSTA_DB_TYPE')?trim(strtolower(getenv('FLIBUSTA_DB_TYPE'))):'postgres';
-if ($dbtype != 'postgress') { // check for valid type, currently only postgress is supported, but in the future others e.g. mysql will be added
+if ($dbtype != 'postgres') { // check for valid type, currently only postgress is supported, but in the future others e.g. mysql will be added
 	error_log('unsupported db type '.$dbtype.', reverting to postgress');
 	$dbtype = 'postgres';
 }
 $dsn = match($dbtype) {
-	'postgress' => "pgsql:host=".$dbhost."postgres;dbname=".$dbname.";options='--client_encoding=UTF8'",
+	'postgres' => "pgsql:host=".$dbhost."postgres;dbname=".$dbname.";options='--client_encoding=UTF8'",
 	// dsn for supported db types should be added here
 	default => "pgsql:host=".$dbhost.";dbname=".$dbname.";options='--client_encoding=UTF8'"
 };
