@@ -8,7 +8,7 @@
  <link href="/" rel="start" type="application/atom+xml;profile=opds-catalog" />
 <?php
 
-$ai = $dbh->query("SELECT SUBSTR(LastName, 1, 1) alpha, COUNT(*) cnt FROM libavtorname GROUP BY SUBSTR(LastName, 1, 1) ORDER BY LastName");
+$ai = $dbh->query("SELECT SUBSTR(LastName, 1, 1) alpha, COUNT(*) cnt FROM libavtorname GROUP BY SUBSTR(LastName, 1, 1) ORDER BY SUBSTR(LastName, 1, 1)");
 while ($ach = $ai->fetchObject()) {
 	echo "<entry> <updated>2019-02-08T18:11:21+01:00</updated>";
 	echo "<id>tag:authors:$ach->aplha</id>";
