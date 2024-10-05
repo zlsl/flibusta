@@ -411,10 +411,10 @@ function cut_str2($string, $maxlen=700) {
 }
 
 /***************************************************************************/
-function clean_str($input, $sql=false) {
-  if ($sql) {
-    $input = DB::esc($input);
-  }
+function clean_str($input) {
+  if (!$input)
+	return $input;
+
   $input = strip_tags($input);
 
   $input = str_replace ("\n"," ", $input);
@@ -490,7 +490,7 @@ function decode_gurl($mobile = false)  {
 }
 
 function safe_str($str) {
-        return preg_replace("/[^A-Za-z0-9 -_]/", '', $str);
+        return ($str)?preg_replace("/[^A-Za-z0-9 -_]/", '', $str):$str;
 }
 
 
