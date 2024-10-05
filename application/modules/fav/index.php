@@ -30,19 +30,23 @@ $stmt = $dbh->prepare("SELECT *
 		LEFT JOIN libseqname USING(seqid)
 		WHERE user_uuid=:uuid AND seqid IS NOT NULL");
 $stmt->bindParam(":uuid", $user_uuid);
-$stmt->execute();
 
 echo '<div class="row">';
 echo '<div class="col mb-3">';
 echo '<div class="block">';
+try {
+$stmt->execute();
 while ($s = $stmt->fetch()) {
 	echo "<a class='btn btn-sm btn-dark' href='/?sid=$s->seqid'>";
 	echo "&nbsp;$s->seqname&nbsp;</a> ";
 }
-echo "</div>";
-echo "</div>";
-echo "</div>";
 
+} catch (PDOException $e) {
+	print_r($e);
+}
+echo "</div>";
+echo "</div>";
+echo "</div>";
 
 $stmt = $dbh->prepare("SELECT DISTINCT b.*
 		FROM fav f
