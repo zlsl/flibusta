@@ -1,4 +1,7 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?php
+header('Content-Type: application/atom+xml; charset=utf-8');
+echo '<?xml version="1.0" encoding="utf-8"?>';
+echo <<< _XML
  <feed xmlns="http://www.w3.org/2005/Atom" xmlns:dc="http://purl.org/dc/terms/" xmlns:os="http://a9.com/-/spec/opensearch/1.1/" xmlns:opds="http://opds-spec.org/2010/catalog"> <id>tag:root:authors</id>
  <title>Книги по авторам</title>
  <updated>2019-02-08T18:11:20+01:00</updated>
@@ -6,7 +9,8 @@
  <link href="/opds-opensearch.xml" rel="search" type="application/opensearchdescription+xml" />
  <link href="/search?q={searchTerms}" rel="search" type="application/atom+xml" />
  <link href="/" rel="start" type="application/atom+xml;profile=opds-catalog" />
- <?php
+_XML;
+
 $q = $_GET['q'];
 $get = "?q=$q";
 
@@ -14,16 +18,18 @@ if ($q == '') {
 	die(':(');
 }
 
-$filter2 = "AND libbook.Title LIKE " . DB::es('%' . $q . '%');
+//$filter2 = "AND libbook.Title LIKE " . DB::es('%' . $q . '%');
 
-$books = DB::query("SELECT DISTINCT *, libbook.Title BookTitle,
+$books = $dbh->prepare("SELECT DISTINCT *, libbook.Title BookTitle,
         (SELECT Body FROM libbannotations WHERE BookId=libbook.BookId LIMIT 1) Body
 		FROM libbook 
 		JOIN libgenre USING(BookId) 
-		WHERE deleted=0 $filter2
+		WHERE deleted='0' AND libbook.Title LIKE :q
 		GROUP BY BookId
 		LIMIT 100");
-
+		$param = '%'.$q.'%';
+$books->bindParam(":q", $param);
+$books->execute();
 
 while ($b = $books->fetch_object()) {
 	echo " <entry> <updated>2019-02-08T21:53:29+01:00</updated>";
@@ -31,10 +37,11 @@ while ($b = $books->fetch_object()) {
 	echo " <title>" . htmlspecialchars($b->BookTitle) . "</title>";
 
 	$as = '';
-	$authors = DB::query("SELECT libavtorname.* FROM libavtorname, libavtor WHERE libavtor.BookId=$b->BookId AND libavtor.AvtorId=libavtorname.AvtorId ORDER BY LastName");
-	while ($a = $authors->fetch_object()) {
+	$authors = $dbh->query("SELECT libavtorname.* FROM libavtorname, libavtor WHERE libavtor.BookId=$b->BookId AND libavtor.AvtorId=libavtorname.AvtorId ORDER BY LastName");
+	while ($a = $authors->fetchObject()) {
 		$as .= $a->LastName . " " . $a->FirstName . " " . $a->MiddleName . ", ";
 	}
+	$authors = null;
 
 	echo "<author> <name>$as</name>";
 	echo " <uri>/a/id</uri>";
@@ -47,5 +54,6 @@ while ($b = $books->fetch_object()) {
 
 	echo "</entry>\n";
 }
+$books = null;
 ?>
 </feed>

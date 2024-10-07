@@ -1,13 +1,16 @@
-<?xml version="1.0" encoding="utf-8"?>
- <feed xmlns="http://www.w3.org/2005/Atom" xmlns:dc="http://purl.org/dc/terms/" xmlns:os="http://a9.com/-/spec/opensearch/1.1/" xmlns:opds="http://opds-spec.org/2010/catalog"> <id>tag:root</id>
- <title>Жанры в <?php echo $_GET['id']; ?></title>
- <updated><?php echo $cdt; ?></updated>
+<?php
+header('Content-Type: application/atom+xml; charset=utf-8');
+echo '<?xml version="1.0" encoding="utf-8"?>';
+echo '<feed xmlns="http://www.w3.org/2005/Atom" xmlns:dc="http://purl.org/dc/terms/" xmlns:os="http://a9.com/-/spec/opensearch/1.1/" xmlns:opds="http://opds-spec.org/2010/catalog"> <id>tag:root</id>';
+echo "<title>Жанры в ".$_GET['id']."</title>";
+echo "<updated>$cdt</updated>";
+echo  <<< _XML
  <icon>/favicon.svg</icon>
  <link href="/opds-opensearch.xml" rel="search" type="application/opensearchdescription+xml" />
  <link href="/opds/search?q={searchTerms}" rel="search" type="application/atom+xml" />
  <link href="/opds/" rel="start" type="application/atom+xml;profile=opds-catalog" />
 
-<?php
+ _XML;
 
 $gs = $dbh->prepare("SELECT *,
 	(SELECT COUNT(*) FROM libgenre WHERE libgenre.genreid=g.genreid) cnt
@@ -24,6 +27,6 @@ while ($g = $gs->fetch()) {
 	echo " <link href='/opds/list/?genre_id=$g->genreid' type='application/atom+xml;profile=opds-catalog' />";
 	echo "</entry>\n";
 }
-
+echo '</feed>';
 ?>
-</feed>
+
