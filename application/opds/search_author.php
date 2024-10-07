@@ -23,12 +23,7 @@ if ($q == '') {
 	die(':(');
 }
 
-$filter2 = "AND libbook.Title LIKE " . DB::es('%' . $q . '%');
-$filter3 = "WHERE LastName LIKE " . DB::es('%' . $q . '%');
-$filter4 = "WHERE SeqName LIKE " . DB::es('%' . $q . '%');
-
-
-$authors = DB::query("SELECT *, 
+$authors = $dbh->prepare("SELECT *, 
 		(SELECT COUNT(*) FROM libavtor, libbook WHERE 
 		libbook.deleted=0 AND
 		libbook.BookId=libavtor.BookId AND
@@ -36,17 +31,18 @@ $authors = DB::query("SELECT *,
 		libavtor.avtorId=libavtorname.AvtorId) cnt 
 		FROM libavtorname
 			LEFT JOIN libapics USING(AvtorId)
-
-		$filter3 ORDER BY LastName, FirstName");
-
-while ($a = $authors->fetch_object()) {
+		WHERE LastName LIKE :q ORDER BY LastName, FirstName");
+		$authors->bindParam(":q",'%'.$q.'%');
+		$authors->execute();
+while ($a = $authors->fetch()) {
 	echo " <entry> <updated>2019-02-08T21:53:29+01:00</updated>";
 	if ($a->cnt > 0) {
 		echo " <id>tag:author:$a->AvtorId</id>";
 		echo " <title>$a->LastName $a->MiddleName $a->FirstName $a->NickName</title>";
 
-		$books_cnt = DB::query("SELECT COUNT(*) cnt FROM libbook,libavtor WHERE deleted=0 AND libavtor.BookId=libbook.BookId AND libavtor.AvtorId=$a->AvtorId")->fetch_object()->cnt;
-
+		$stmt = $dbh->query("SELECT COUNT(*) cnt FROM libbook,libavtor WHERE deleted=0 AND libavtor.BookId=libbook.BookId AND libavtor.AvtorId=$a->AvtorId");
+		$books_cnt = $stmt->cnt;
+		$stmt = null;
 		echo " <content type='text'>$books_cnt книга</content>";
 	}
 	echo '</entry>';
