@@ -1,12 +1,9 @@
-FROM phpdockerio/php74-fpm:latest
+FROM php:8.1-fpm-alpine
+
+ADD --chmod=0755 https://github.com/mlocati/docker-php-extension-installer/releases/latest/download/install-php-extensions /usr/local/bin/
+
 WORKDIR "/application"
 
-RUN apt-get update; \
-    apt-get -y --no-install-recommends install \
-	postgresql-client \
-	python \
-        php7.4-bz2 \ 
-        php7.4-gd \ 
-        php7.4-pgsql; \
-    apt-get clean; \
-    rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* /usr/share/doc/*
+RUN apk --update add postgresql-client;\
+  apk add python3;
+RUN install-php-extensions gd bz2 pdo_pgsql
