@@ -36,7 +36,19 @@ services:
             - './FlibustaSQL/lib.b.attached.zip:/application/cache/lib.b.attached.zip'
             - './Flibusta.Net:/application/flibusta'
             - './FlibustaSQL:/application/sql'
-            - './phpdocker/php-fpm/php-ini-overrides.ini:/etc/php/7.4/fpm/conf.d/99-overrides.ini'
+            - './phpdocker/php-fpm/php-ini-overrides.ini:/usr/local/etc/php/conf.d/local-custom.ini'
+        environment:
+            - FLIBUSTA_DBUSER=flibusta
+            - FLUBUSTA_DBNAME=flibusta
+            - FLIBUSTA_DBTYPE=postgres
+            - FLIBUSTA_DBHOST=postgres
+            - FLIBUSTA_DBPASSWORD_FILE=/run/secrets/FLIBUSTA_PWD
+        secrets:
+            - FLIBUSTA_PWD
+
 
 volumes:
     db-data:
+secrets:
+    FLIBUSTA_PWD:
+        file: ./secrets/flibusta_pwd.txt

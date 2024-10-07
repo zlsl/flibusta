@@ -16,4 +16,4 @@ wget --directory-prefix=FlibustaSQL -c -nc http://flibusta.is/sql/lib.b.annotati
 wget --directory-prefix=FlibustaSQL -c -nc http://flibusta.is/sql/lib.a.annotations.sql.gz
 wget --directory-prefix=FlibustaSQL -c -nc http://flibusta.is/sql/lib.b.annotations_pics.sql.gz
 wget --directory-prefix=FlibustaSQL -c -nc http://flibusta.is/sql/lib.a.annotations_pics.sql.gz
-
+docker exec $(docker ps -q --filter "ancestor=flibusta_php-fpm") /application/tools/app_import_sql.sh
