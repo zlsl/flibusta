@@ -411,10 +411,7 @@ function cut_str2($string, $maxlen=700) {
 }
 
 /***************************************************************************/
-function clean_str($input, $sql=false) {
-  if ($sql) {
-    $input = DB::esc($input);
-  }
+function clean_str($input) {
   $input = strip_tags($input);
 
   $input = str_replace ("\n"," ", $input);
@@ -474,12 +471,12 @@ function decode_gurl($mobile = false)  {
   }
 
   if ($url->access > 0) {
-    if (!is_admin()) {
+   // if (!is_admin()) {
       include(ROOT_PATH . 'modules/403/module.conf');
       $url->module = ROOT_PATH . 'modules/403/index.php';
       $url->mod = '403';
       $menu = false;
-    }
+   // }
   }
 
   if ( (file_exists(ROOT_PATH . 'modules/' . $url->mod . '/module_menu.php')) && ($menu) ) {
@@ -555,7 +552,7 @@ function opds_book($b) {
 	$seq = $dbh->prepare("SELECT SeqId, SeqName, SeqNumb FROM libseq
 		JOIN libseqname USING(SeqId)
 		WHERE BookId=:id");
-	$seq->bindParam(":id", $book->bookid);
+	$seq->bindParam(":id", $b->bookid);
 	$seq->execute();
 	while ($s = $seq->fetch()) {
 		$ssq = $s->seqname;

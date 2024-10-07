@@ -8,3 +8,4 @@ switch ($url->action) {
 	default:
 		include('search_book.php');
 }
+?>

@@ -1,12 +1,9 @@
 <?php
-
+header('Content-Type: application/atom+xml; charset=utf-8');
 echo '<?xml version="1.0" encoding="utf-8"?>';
 echo <<< _XML
  <feed xmlns="http://www.w3.org/2005/Atom" xmlns:dc="http://purl.org/dc/terms/" xmlns:os="http://a9.com/-/spec/opensearch/1.1/" xmlns:opds="https://specs.opds.io/opds-1.2"> <id>tag:root</id>
  <title>Домашняя библиотека</title>
- _XML;
- echo "<updated>$cdt</updated>";
- echo <<< _XML
  <icon>/favicon.svg</icon>
  <link href="/opds-opensearch.xml" rel="search" type="application/opensearchdescription+xml" />
  <link href="/opds/search?q={searchTerms}" rel="search" type="application/atom+xml" />
@@ -46,13 +43,13 @@ echo <<< _XML
  <link href="/opds/authorsindex" type="application/atom+xml;profile=opds-catalog" />
 </entry>
 _XML;
+/* opds/sequencesindex.php doesn't exist so must comment out this one for now
 echo "<entry> <updated>$cdt</updated>";
 echo <<< _XML
  <id>tag:root:sequences</id>
  <title>По сериям</title>
  <content type="text">Поиск книг по сериям</content>
  <link href="/opds/sequencesindex" type="application/atom+xml;profile=opds-catalog" />
-</entry>
-</feed>
-_XML;
+</entry> */
 ?>
+</feed>
