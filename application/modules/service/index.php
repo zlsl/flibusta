@@ -6,7 +6,7 @@
 <div class='card-body'>
 <?php
 
-$status_import = (trim(shell_exec('ps aux|grep app_|grep -v grep')) !== '');
+$status_import = (trim(shell_exec('ps aux|grep app_|grep -v grep') ?? '') !== '');
 
 function get_ds($path){
 	$io = popen ( '/usr/bin/du -sk ' . $path, 'r' );
