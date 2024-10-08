@@ -6,4 +6,4 @@ WORKDIR "/application"
 
 RUN apk --update add postgresql-client;\
   apk add python3;
-RUN chmod +x /usr/local/bin/install-php-extensions; install-php-extensions gd bz2 pdo_pgsql
+RUN chmod +x /usr/local/bin/install-php-extensions; install-php-extensions gd bz2 pdo_pgsql zip
