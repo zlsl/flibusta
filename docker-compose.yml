@@ -20,8 +20,6 @@ services:
             - './application:/application'
             - './cache:/application/cache'
             - './Flibusta.Net:/application/flibusta'
-            - './FlibustaSQL/lib.a.attached.zip:/application/cache/lib.a.attached.zip'
-            - './FlibustaSQL/lib.b.attached.zip:/application/cache/lib.b.attached.zip'
             - './phpdocker/nginx/nginx.conf:/etc/nginx/conf.d/default.conf'
         ports:
             - '27100:80'
@@ -32,8 +30,6 @@ services:
         volumes:
             - './application:/application'
             - './cache:/application/cache'
-            - './FlibustaSQL/lib.a.attached.zip:/application/cache/lib.a.attached.zip'
-            - './FlibustaSQL/lib.b.attached.zip:/application/cache/lib.b.attached.zip'
             - './Flibusta.Net:/application/flibusta'
             - './FlibustaSQL:/application/sql'
             - './phpdocker/php-fpm/php-ini-overrides.ini:/usr/local/etc/php/conf.d/local-custom.ini'
