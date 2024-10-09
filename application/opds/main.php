@@ -4,7 +4,7 @@ echo '<?xml version="1.0" encoding="utf-8"?>';
 echo <<< _XML
  <feed xmlns="http://www.w3.org/2005/Atom" xmlns:dc="http://purl.org/dc/terms/" xmlns:os="http://a9.com/-/spec/opensearch/1.1/" xmlns:opds="https://specs.opds.io/opds-1.2"> <id>tag:root</id>
  <title>Домашняя библиотека</title>
- <icon>/favicon.svg</icon>
+ <icon>/favicon.ico</icon>
  <link href="/opds-opensearch.xml" rel="search" type="application/opensearchdescription+xml" />
  <link href="/opds/search?q={searchTerms}" rel="search" type="application/atom+xml" />
  <link href="/opds/" rel="start" type="application/atom+xml;profile=opds-catalog" />
