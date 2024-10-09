@@ -146,12 +146,12 @@ if ($type == 'epub') {
 		$cover = $im['data'];
 		unlink(ROOT_PATH . "cache/tmp/$iid.tmp");
 	} else {
-		echo file_get_contents('none.jpg');
+		echo file_get_contents('/application/none.jpg');
 	}
 }
 
 if (strlen($cover) < 100) {
-	$cover = file_get_contents(ROOT_PATH . 'none.jpg');
+	$cover = file_get_contents('/application/none.jpg');
 	echo $cover;
 	die();
 } else {
