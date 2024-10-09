@@ -33,6 +33,7 @@ services:
             - './Flibusta.Net:/application/flibusta'
             - './FlibustaSQL:/application/sql'
             - './phpdocker/php-fpm/php-ini-overrides.ini:/usr/local/etc/php/conf.d/local-custom.ini'
+            - './phpdocker/php-fpm/php-fpm.conf:/usr/local/etc/php-fpm.d/zz-php-fpm.conf'
         environment:
             - FLIBUSTA_DBUSER=flibusta
             - FLUBUSTA_DBNAME=flibusta

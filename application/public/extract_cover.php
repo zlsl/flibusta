@@ -9,12 +9,12 @@ function resizeCover($filename, $newwidth, $newheight){
 	$width = imagesx($i);
        	$height = imagesy($i);
     if($width > $height && $newheight < $height){
-        $newheight = $height / ($width / $newwidth);
+        $newheight = (int)round($height / ($width / $newwidth));
     } else if ($width < $height && $newwidth < $width) {
-        $newwidth = $width / ($height / $newheight);   
+        $newwidth = (int)round($width / ($height / $newheight));
     } else {
-        $newwidth = $width;
-        $newheight = $height;
+        $newwidth = (int)round($width);
+        $newheight = (int)round($height);
     }
     $thumb = imagecreatetruecolor($newwidth, $newheight);
     imagecopyresized($thumb, $i, 0, 0, 0, 0, $newwidth, $newheight, $width, $height);
@@ -102,7 +102,13 @@ $stmt->execute();
 $zip_name = $stmt->fetch()->filename;
 $zip = new ZipArchive(); 
 
-$filename = $dbh->query("SELECT filename FROM libfilename where BookId=$id")->fetch()->filename;
+$result = $dbh->query("SELECT filename FROM libfilename where BookId=$id")->fetch();
+
+if ($result) {
+    $filename = $result->filename;
+} else {
+    $filename = null;
+}
 if ($filename == '') {
 	$filename = trim("$id.$type");
 }

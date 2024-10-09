@@ -2,6 +2,7 @@
 mkdir /application/sql/psql
 mkdir /application/cache/authors
 mkdir /application/cache/covers
+mkdir /application/cache/tmp
 
 echo "Распаковка sql.gz">/application/sql/status
 gzip -f -d /application/sql/*.gz
