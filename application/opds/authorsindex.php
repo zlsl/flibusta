@@ -14,7 +14,7 @@ _XML;
 $ai = $dbh->query("SELECT SUBSTR(LastName, 1, 1) alpha, COUNT(*) cnt FROM libavtorname GROUP BY SUBSTR(LastName, 1, 1) ORDER BY SUBSTR(LastName, 1, 1)");
 while ($ach = $ai->fetchObject()) {
 	echo "<entry> <updated>2019-02-08T18:11:21+01:00</updated>";
-	echo "<id>tag:authors:$ach->aplha</id>";
+	echo "<id>tag:authors:$ach->alpha</id>";
 	echo "<title>$ach->alpha</title>";
 	echo "<content type='text'>$ach->cnt авторов на $ach->alpha</content>";
 	echo "<link href='/authorsindex/$ach->alpha' type='application/atom+xml;profile=opds-catalog' />";
