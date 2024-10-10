@@ -1,8 +1,8 @@
 #!/bin/sh
-mkdir /application/sql/psql
-mkdir /application/cache/authors
-mkdir /application/cache/covers
-mkdir /application/cache/tmp
+mkdir -p /application/sql/psql
+mkdir -p /application/cache/authors
+mkdir -p /application/cache/covers
+mkdir -p /application/cache/tmp
 
 echo "Распаковка sql.gz">/application/sql/status
 gzip -f -d /application/sql/*.gz

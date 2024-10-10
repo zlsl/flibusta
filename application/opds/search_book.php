@@ -20,37 +20,37 @@ if ($q == '') {
 
 //$filter2 = "AND libbook.Title LIKE " . DB::es('%' . $q . '%');
 
-$books = $dbh->prepare("SELECT DISTINCT *, libbook.Title BookTitle,
-        (SELECT Body FROM libbannotations WHERE BookId=libbook.BookId LIMIT 1) Body
-		FROM libbook 
+$books = $dbh->prepare("SELECT DISTINCT BookId, libbook.Title as BookTitle,
+        (SELECT Body FROM libbannotations WHERE BookId=libbook.BookId LIMIT 1) as Body
+		FROM libbook
 		JOIN libgenre USING(BookId) 
 		WHERE deleted='0' AND libbook.Title LIKE :q
-		GROUP BY BookId
+		GROUP BY BookId, BookTitle, Body
 		LIMIT 100");
 		$param = '%'.$q.'%';
 $books->bindParam(":q", $param);
 $books->execute();
 
-while ($b = $books->fetch_object()) {
+while ($b = $books->fetchObject()) {
 	echo " <entry> <updated>2019-02-08T21:53:29+01:00</updated>";
-	echo " <id>tag:book:$b->BookId</id>";
-	echo " <title>" . htmlspecialchars($b->BookTitle) . "</title>";
+	echo " <id>tag:book:$b->bookid</id>";
+	echo " <title>" . htmlspecialchars($b->booktitle) . "</title>";
 
 	$as = '';
-	$authors = $dbh->query("SELECT libavtorname.* FROM libavtorname, libavtor WHERE libavtor.BookId=$b->BookId AND libavtor.AvtorId=libavtorname.AvtorId ORDER BY LastName");
+	$authors = $dbh->query("SELECT lastname, firstname, middlename FROM libavtorname, libavtor WHERE libavtor.BookId=$b->bookid AND libavtor.AvtorId=libavtorname.AvtorId ORDER BY LastName");
 	while ($a = $authors->fetchObject()) {
-		$as .= $a->LastName . " " . $a->FirstName . " " . $a->MiddleName . ", ";
+		$as .= $a->lastname . " " . $a->firstname . " " . $a->middlename . ", ";
 	}
 	$authors = null;
 
 	echo "<author> <name>$as</name>";
 	echo " <uri>/a/id</uri>";
 	echo "</author>";
-	echo " <content type='text/html'>" . htmlspecialchars($b->Body) . "</content>";
+	echo " <content type='text/html'>" . htmlspecialchars($b->body ?? '') . "</content>";
 
-	echo "<link rel='http://opds-spec.org/image/thumbnail' href='http://192.168.32.5/lib/get_cover.php?id=$b->BookId' type='image/jpeg'/>";
-	echo "<link rel='http://opds-spec.org/image' href='http://192.168.32.5/lib/get_cover.php?id=$b->BookId' type='image/jpeg'/>";
-	echo " <link href='http://192.168.32.5/lib/get_fb2.php?id=$b->BookId' rel='http://opds-spec.org/acquisition/open-access' type='application/fb2+zip' />";
+	echo "<link rel='http://opds-spec.org/image/thumbnail' href='http://192.168.32.5/lib/get_cover.php?id=$b->bookid' type='image/jpeg'/>";
+	echo "<link rel='http://opds-spec.org/image' href='http://192.168.32.5/lib/get_cover.php?id=$b->bookid' type='image/jpeg'/>";
+	echo " <link href='http://192.168.32.5/lib/get_fb2.php?id=$b->bookid' rel='http://opds-spec.org/acquisition/open-access' type='application/fb2+zip' />";
 
 	echo "</entry>\n";
 }
