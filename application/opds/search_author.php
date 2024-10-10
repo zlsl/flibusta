@@ -7,15 +7,15 @@ echo <<< _XML
  <updated>2019-02-08T18:11:20+01:00</updated>
  <icon>/favicon.ico</icon>
  <link href="/opds-opensearch.xml" rel="search" type="application/opensearchdescription+xml" />
- <link href="/search/author?q={searchTerms}" rel="search" type="application/atom+xml" />
- <link href="/" rel="start" type="application/atom+xml;profile=opds-catalog" />
+ <link href="/opds/search/author?q={searchTerms}" rel="search" type="application/atom+xml" />
+ <link href="/opds" rel="start" type="application/atom+xml;profile=opds-catalog" />
 
 
 <entry> <updated>2019-02-14T21:52:14+01:00</updated>
  <id>tag:search:author</id>
  <title>Поиск авторов</title>
  <content type="text">Поиск авторов по фамилии</content>
- <link href="/search/author?q=authors&amp;searchTerm=" type="application/atom+xml;profile=opds-catalog" />
+ <link href="/opds/search/author?q=authors&amp;searchTerm=" type="application/atom+xml;profile=opds-catalog" />
 </entry>
 _XML;
 
