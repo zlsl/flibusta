@@ -7,8 +7,8 @@ echo <<< _XML
  <updated>2019-02-08T18:11:20+01:00</updated>
  <icon>/favicon.ico</icon>
  <link href="/opds-opensearch.xml" rel="search" type="application/opensearchdescription+xml" />
- <link href="/search?q={searchTerms}" rel="search" type="application/atom+xml" />
- <link href="/" rel="start" type="application/atom+xml;profile=opds-catalog" />
+ <link href="/opds/search?q={searchTerms}" rel="search" type="application/atom+xml" />
+ <link href="/opds" rel="start" type="application/atom+xml;profile=opds-catalog" />
 _XML;
 
 $q = $_GET['q'];
