@@ -3,7 +3,7 @@ header('Content-Type: application/atom+xml; charset=utf-8');
 echo '<?xml version="1.0" encoding="utf-8"?>';
 echo <<< _XML
  <feed xmlns="http://www.w3.org/2005/Atom" xmlns:dc="http://purl.org/dc/terms/" xmlns:os="http://a9.com/-/spec/opensearch/1.1/" xmlns:opds="http://opds-spec.org/2010/catalog"> <id>tag:root:authors</id>
- <title>Книги по авторам</title>
+ <title>Поиск по книгам</title>
  <updated>2019-02-08T18:11:20+01:00</updated>
  <icon>/favicon.ico</icon>
  <link href="/opds-opensearch.xml" rel="search" type="application/opensearchdescription+xml" />
@@ -48,9 +48,9 @@ while ($b = $books->fetchObject()) {
 	echo "</author>";
 	echo " <content type='text/html'>" . htmlspecialchars($b->body ?? '') . "</content>";
 
-	echo "<link rel='http://opds-spec.org/image/thumbnail' href='http://192.168.32.5/lib/get_cover.php?id=$b->bookid' type='image/jpeg'/>";
-	echo "<link rel='http://opds-spec.org/image' href='http://192.168.32.5/lib/get_cover.php?id=$b->bookid' type='image/jpeg'/>";
-	echo " <link href='http://192.168.32.5/lib/get_fb2.php?id=$b->bookid' rel='http://opds-spec.org/acquisition/open-access' type='application/fb2+zip' />";
+	echo "<link rel='http://opds-spec.org/image/thumbnail' href='/extract_cover.php?id=$b->bookid' type='image/jpeg'/>";
+	echo "<link rel='http://opds-spec.org/image' href='/extract_cover.php?id=$b->bookid' type='image/jpeg'/>";
+	echo " <link href='/fb2.php?id=$b->bookid' rel='http://opds-spec.org/acquisition/open-access' type='application/fb2+zip' />";
 
 	echo "</entry>\n";
 }

@@ -3,11 +3,11 @@ header('Content-Type: application/atom+xml; charset=utf-8');
 echo '<?xml version="1.0" encoding="utf-8"?>';
 echo <<< _XML
  <feed xmlns="http://www.w3.org/2005/Atom" xmlns:dc="http://purl.org/dc/terms/" xmlns:os="http://a9.com/-/spec/opensearch/1.1/" xmlns:opds="http://opds-spec.org/2010/catalog"> <id>tag:root:authors</id>
- <title>Книги по авторам</title>
+ <title>Поиск по авторам</title>
  <updated>2019-02-08T18:11:20+01:00</updated>
  <icon>/favicon.ico</icon>
  <link href="/opds-opensearch.xml" rel="search" type="application/opensearchdescription+xml" />
- <link href="/opds/search/author?q={searchTerms}" rel="search" type="application/atom+xml" />
+ <link href="/opds/search?by=author&amp;q={searchTerm}" rel="search" type="application/atom+xml" />
  <link href="/opds" rel="start" type="application/atom+xml;profile=opds-catalog" />
 
 
@@ -15,38 +15,39 @@ echo <<< _XML
  <id>tag:search:author</id>
  <title>Поиск авторов</title>
  <content type="text">Поиск авторов по фамилии</content>
- <link href="/opds/search/author?q=authors&amp;searchTerm=" type="application/atom+xml;profile=opds-catalog" />
+ <link href="/opds/search?by=author&amp;q={searchTerm}" type="application/atom+xml;profile=opds-catalog" />
 </entry>
 _XML;
 
 $q = $_GET['q'];
-$get = "?q=$q";
 
 if ($q == '') {
 	die(':(');
 }
-
+$queryParam = $q . '%';
+error_log($queryParam);
 $authors = $dbh->prepare("SELECT *, 
 		(SELECT COUNT(*) FROM libavtor, libbook WHERE 
-		libbook.deleted=0 AND
-		libbook.BookId=libavtor.BookId AND
-		libavtor.AvtorId=libavtorname.AvtorId AND
-		libavtor.avtorId=libavtorname.AvtorId) cnt 
+		libbook.deleted='0' AND
+		libbook.bookid=libavtor.bookid AND
+		libavtor.AvtorId=libavtorname.avtorid AND
+		libavtor.avtorId=libavtorname.avtorid) cnt
 		FROM libavtorname
-			LEFT JOIN libapics USING(AvtorId)
-		WHERE LastName LIKE :q ORDER BY LastName, FirstName");
-		$authors->bindParam(":q",'%'.$q.'%');
+			LEFT JOIN libapics USING(avtorid)
+		WHERE lastname ILIKE :q ORDER BY lastname, firstname");
+		$authors->bindParam(":q", $queryParam);
 		$authors->execute();
 while ($a = $authors->fetch()) {
-	echo " <entry> <updated>2019-02-08T21:53:29+01:00</updated>";
+	echo "\n<entry> <updated>2019-02-08T21:53:29+01:00</updated>";
 	if ($a->cnt > 0) {
-		echo " <id>tag:author:$a->AvtorId</id>";
-		echo " <title>$a->LastName $a->MiddleName $a->FirstName $a->NickName</title>";
+		echo " <id>tag:author:$a->avtorid</id>";
+		echo " <title>$a->lastname $a->middlename $a->firstname $a->nickname</title>";
 
-		$stmt = $dbh->query("SELECT COUNT(*) cnt FROM libbook,libavtor WHERE deleted=0 AND libavtor.BookId=libbook.BookId AND libavtor.AvtorId=$a->AvtorId");
-		$books_cnt = $stmt->cnt;
+		$stmt = $dbh->query("SELECT COUNT(*) as cnt FROM libbook,libavtor WHERE deleted='0' AND libavtor.bookid=libbook.bookid AND libavtor.avtorid=$a->avtorid");
+		$stmt->execute();
+		$books_cnt = $stmt->fetch()->cnt;
 		$stmt = null;
-		echo " <content type='text'>$books_cnt книга</content>";
+		echo " <content type='text'>$books_cnt книг</content>";
 	}
 	echo '</entry>';
 }
