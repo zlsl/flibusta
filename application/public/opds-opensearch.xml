@@ -6,7 +6,7 @@
 <Url type="application/atom+xml" indexOffset="0" pageOffset="0" template="/opds/search?searchTerm={searchTerms}&searchType=books&pageNumber={startPage?}"/>
 <SearchForm>/opds/search</SearchForm>
 <LongName>Библиотека</LongName>
-<Image>/favicon.svg</Image>
+<Image>/favicon.ico</Image>
 <Developer/>
 <Attribution/>
 <SyndicationRight>open</SyndicationRight>
