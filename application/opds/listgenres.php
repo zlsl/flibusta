@@ -5,7 +5,7 @@ echo '<feed xmlns="http://www.w3.org/2005/Atom" xmlns:dc="http://purl.org/dc/ter
 echo "<title>Жанры в ".$_GET['id']."</title>";
 echo "<updated>$cdt</updated>";
 echo  <<< _XML
- <icon>/favicon.svg</icon>
+ <icon>/favicon.ico</icon>
  <link href="/opds-opensearch.xml" rel="search" type="application/opensearchdescription+xml" />
  <link href="/opds/search?q={searchTerms}" rel="search" type="application/atom+xml" />
  <link href="/opds/" rel="start" type="application/atom+xml;profile=opds-catalog" />

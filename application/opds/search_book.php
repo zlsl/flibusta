@@ -4,7 +4,7 @@ echo '<?xml version="1.0" encoding="utf-8"?>';
 echo <<< _XML
  <feed xmlns="http://www.w3.org/2005/Atom" xmlns:dc="http://purl.org/dc/terms/" xmlns:os="http://a9.com/-/spec/opensearch/1.1/" xmlns:opds="http://opds-spec.org/2010/catalog"> <id>tag:root:authors</id>
  <title>Поиск по книгам</title>
- <updated>2019-02-08T18:11:20+01:00</updated>
+ <updated>$cdt</updated>
  <icon>/favicon.ico</icon>
  <link href="/opds-opensearch.xml" rel="search" type="application/opensearchdescription+xml" />
  <link href="/opds/search?q={searchTerms}" rel="search" type="application/atom+xml" />
@@ -32,7 +32,7 @@ $books->bindParam(":q", $param);
 $books->execute();
 
 while ($b = $books->fetchObject()) {
-	echo " <entry> <updated>2019-02-08T21:53:29+01:00</updated>";
+	echo " <entry> <updated>$cdt</updated>";
 	echo " <id>tag:book:$b->bookid</id>";
 	echo " <title>" . htmlspecialchars($b->booktitle) . "</title>";
 
