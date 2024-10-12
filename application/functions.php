@@ -563,6 +563,7 @@ function opds_book($b) {
 			$ssq .= " ($s->seqnumb) ";
 		}
 		$sq .= $ssq;
+		echo " <link href='/opds/list?seq_id=".$s->seqid."' rel='related' type='application/atom+xml' title='Все книги серии &quot;$ssq&quot;' />";
 	}
 	if ($sq != '') {
 		$sq = "Сборник: $sq";
@@ -580,8 +581,11 @@ function opds_book($b) {
 		echo "<name>$a->lastname $a->firstname $a->middlename</name>";
 		echo " <uri>/a/id</uri>";
 	}
-
 	echo "</author>";
+	$au->execute();
+	while ($a = $au->fetch()) {
+		echo "\n <link href='/opds/list?author_id=$a->avtorid' rel='related' type='application/atom+xml' title='Все книги автора $a->lastname $a->firstname $a->middlename' />";
+	}
 	echo " <dc:language>" . trim($b->lang) . "</dc:language>";
 	if ($b->year > 0) {
 		echo " <dc:issued>$b->year</dc:issued>";
@@ -589,15 +593,16 @@ function opds_book($b) {
 //	if (intval($b->pages > 0)) {
 //		echo "<dcterms:extent>$b->pages страниц</dcterms:extent>";
 //	}
-	echo " <summary type='text'>" . strip_tags($an) . "\n $sq \n $b->keywords</summary>";
-	echo "<link rel='http://opds-spec.org/image/thumbnail' href='/extract_cover.php?sid=$b->bookid' type='image/jpeg'/>";
-	echo "<link rel='http://opds-spec.org/image' href='/extract_cover.php?id=$b->bookid' type='image/jpeg'/>";
+	echo "\n <summary type='text'>" . strip_tags($an) . "\n $sq \n $b->keywords</summary>";
+	echo "\n <link rel='http://opds-spec.org/image/thumbnail' href='/extract_cover.php?sid=$b->bookid' type='image/jpeg'/>";
+	echo "\n <link rel='http://opds-spec.org/image' href='/extract_cover.php?id=$b->bookid' type='image/jpeg'/>";
 	if (trim($b->filetype) == 'fb2') {
 		$ur = 'fb2';
 	} else {
 		$ur = 'usr';
 	}
-	echo " <link href='/$ur.php?id=$b->bookid' rel='http://opds-spec.org/acquisition/open-access' type='application/" . trim($b->filetype) . "' />";
+	echo "\n <link href='/$ur.php?id=$b->bookid' rel='http://opds-spec.org/acquisition/open-access' type='application/" . trim($b->filetype) . "' />";
+	echo "\n <link href='/book/view/$b->bookid' rel='alternate' type='text/html' title='Книга на сайте' />";
 
 	echo "</entry>\n";
 }

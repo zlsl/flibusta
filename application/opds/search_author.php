@@ -7,7 +7,7 @@ echo <<< _XML
  <updated>$cdt</updated>
  <icon>/favicon.ico</icon>
  <link href="/opds-opensearch.xml" rel="search" type="application/opensearchdescription+xml" />
- <link href="/opds/search?by=author&amp;q={searchTerm}" rel="search" type="application/atom+xml" />
+ <link href="/opds/authorsindex?letters={searchTerm}" rel="search" type="application/atom+xml" />
  <link href="/opds" rel="start" type="application/atom+xml;profile=opds-catalog" />
 
 
@@ -15,7 +15,7 @@ echo <<< _XML
  <id>tag:search:author</id>
  <title>Поиск авторов</title>
  <content type="text">Поиск авторов по фамилии</content>
- <link href="/opds/search?by=author&amp;q={searchTerm}" type="application/atom+xml;profile=opds-catalog" />
+ <link href="/opds/authorsindex?letters={searchTerm}" type="application/atom+xml;profile=opds-catalog" />
 </entry>
 _XML;
 
@@ -25,20 +25,18 @@ if ($q == '') {
 	die(':(');
 }
 $queryParam = $q . '%';
-error_log($queryParam);
 $authors = $dbh->prepare("SELECT *, 
 		(SELECT COUNT(*) FROM libavtor, libbook WHERE 
 		libbook.deleted='0' AND
 		libbook.bookid=libavtor.bookid AND
 		libavtor.avtorid=libavtorname.avtorid) cnt
 		FROM libavtorname
-			LEFT JOIN libapics USING(avtorid)
 		WHERE lastname ILIKE :q ORDER BY lastname, firstname");
 		$authors->bindParam(":q", $queryParam);
 		$authors->execute();
 while ($a = $authors->fetch()) {
-	echo "\n<entry> <updated>$cdt</updated>";
 	if ($a->cnt > 0) {
+		echo "\n<entry> <updated>$cdt</updated>";
 		echo " <id>tag:author:$a->avtorid</id>";
 		echo " <title>$a->lastname $a->firstname $a->middlename $a->nickname</title>";
 
@@ -48,8 +46,8 @@ while ($a = $authors->fetch()) {
 		$stmt = null;
 		echo " <content type='text'>$books_cnt книг</content>";
 		echo " <link href='/opds/list?author_id=$a->avtorid' type='application/atom+xml;profile=opds-catalog' />";
+		echo '</entry>';
 	}
-	echo '</entry>';
 }
 
 
