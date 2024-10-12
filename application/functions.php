@@ -530,7 +530,7 @@ function mobile() {
 
 function opds_book($b) {
 	global $dbh;
-	echo " <entry> <updated>" . $b->time . "</updated>";
+	echo "\n<entry> <updated>" . $b->time . "</updated>";
 	echo " <id>tag:book:$b->bookid</id>";
 	echo " <title>" . htmlspecialchars($b->title) . "</title>";
 

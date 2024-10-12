@@ -8,7 +8,7 @@ echo <<< _XML
 _XML;
 echo "<updated>$cdt</updated>";
 echo <<< _XML
-<icon>/favicon.svg</icon>
+<icon>/favicon.ico</icon>
 <link href="/opds-opensearch.xml" rel="search" type="application/opensearchdescription+xml" />
 <link href="/opds/search?q={searchTerms}" rel="search" type="application/atom+xml" />
 <link href="/opds/" rel="start" type="application/atom+xml;profile=opds-catalog" />
