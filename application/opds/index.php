@@ -6,10 +6,9 @@ switch ($url->action) {
 	case 'authorsindex':
 		include('authorsindex.php');
 		break;
-	/* sequencesindex.php doesn't exists so have to remove this case
-		case 'sequencesindex':
+	case 'sequencesindex':
 		include('sequencesindex.php');
-		break; */
+		break;
 	case 'genres':
 		include('genres.php');
 		break;
