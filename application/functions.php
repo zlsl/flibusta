@@ -527,6 +527,35 @@ function mobile() {
         return $isMobile;
 }
 
+function formatSizeUnits($bytes)
+    {
+        if ($bytes >= 1073741824)
+        {
+            $bytes = number_format($bytes / 1073741824, 2) . ' GB';
+        }
+        elseif ($bytes >= 1048576)
+        {
+            $bytes = number_format($bytes / 1048576, 2) . ' MB';
+        }
+        elseif ($bytes >= 1024)
+        {
+            $bytes = number_format($bytes / 1024, 2) . ' KB';
+        }
+        elseif ($bytes > 1)
+        {
+            $bytes = $bytes . ' bytes';
+        }
+        elseif ($bytes == 1)
+        {
+            $bytes = $bytes . ' byte';
+        }
+        else
+        {
+            $bytes = '0 bytes';
+        }
+
+        return $bytes;
+    }
 
 function opds_book($b) {
 	global $dbh;
@@ -595,9 +624,19 @@ function opds_book($b) {
 	echo " <dc:format>" . trim($b->filetype) . "</dc:format>";
 	
 	// Include the size of the book as <dcterms:extent> element using the FileSize attribute from $b
-	echo " <dcterms:extent>" . $b->filesize . " bytes</dcterms:extent>";
+	echo " <dcterms:extent>" . formatSizeUnits($b->filesize) . " bytes</dcterms:extent>";
 	
-	echo "\n <summary type='text'>" . strip_tags($an) . "\n $sq \n $b->keywords</summary>";
+	echo "\n <summary type='text'>" . strip_tags($an);
+	echo "\n $sq ";
+	echo "\n $b->keywords";
+	if ($b->year > 0) {
+		echo "\n Год издания: $b->year";
+	}
+	echo "\n Формат: $b->filetype";
+	echo "\n Язык: $b->lang";
+	echo "\n Размер: " . formatSizeUnits($b->filesize);
+	echo "\n </summary>";
+
 	echo "\n <link rel='http://opds-spec.org/image/thumbnail' href='/extract_cover.php?sid=$b->bookid' type='image/jpeg'/>";
 	echo "\n <link rel='http://opds-spec.org/image' href='/extract_cover.php?id=$b->bookid' type='image/jpeg'/>";
 	if (trim($b->filetype) == 'fb2') {
