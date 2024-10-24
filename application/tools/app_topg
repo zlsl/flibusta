@@ -18,5 +18,5 @@ cat /application/sql/$1|grep INSERT|tr -d \`|sed "s/$table/$table/g">>/applicati
 rm /application/sql/tmp.sql
 
 echo "Импорт $1">>/application/sql/status
-PGPASSWORD=flibusta psql -h postgres  -d flibusta -U flibusta -f /application/sql/psql/$1
+$SQL_CMD -f /application/sql/psql/$1
 
