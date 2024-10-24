@@ -590,9 +590,13 @@ function opds_book($b) {
 	if ($b->year > 0) {
 		echo " <dc:issued>$b->year</dc:issued>";
 	}
-//	if (intval($b->pages > 0)) {
-//		echo "<dcterms:extent>$b->pages страниц</dcterms:extent>";
-//	}
+	
+	// Include the type of the book as <dc:format> element
+	echo " <dc:format>" . trim($b->filetype) . "</dc:format>";
+	
+	// Include the size of the book as <dcterms:extent> element using the FileSize attribute from $b
+	echo " <dcterms:extent>" . $b->filesize . " bytes</dcterms:extent>";
+	
 	echo "\n <summary type='text'>" . strip_tags($an) . "\n $sq \n $b->keywords</summary>";
 	echo "\n <link rel='http://opds-spec.org/image/thumbnail' href='/extract_cover.php?sid=$b->bookid' type='image/jpeg'/>";
 	echo "\n <link rel='http://opds-spec.org/image' href='/extract_cover.php?id=$b->bookid' type='image/jpeg'/>";
