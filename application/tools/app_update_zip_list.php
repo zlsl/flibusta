@@ -1,13 +1,6 @@
 <?php
 error_reporting(E_ALL);
-
-try {
-	$dbh = new PDO("pgsql:host=postgres;dbname=flibusta;options='--client_encoding=UTF8'", 'flibusta', 'flibusta');
-	$dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-	$dbh->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);
-} catch(Exception $e) {
-	print_r($e);
-}
+include('../dbinit.php');
 
 if ($handle = opendir('/application/flibusta')) {
 	$stmt = $dbh->prepare("TRUNCATE book_zip;");
