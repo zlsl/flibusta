@@ -1,5 +1,5 @@
 #!/bin/sh
-. ./dbinit.sh
+/application/tools/dbinit.sh
 
 mkdir -p /application/sql/psql
 mkdir -p /application/cache/authors
