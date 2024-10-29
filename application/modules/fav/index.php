@@ -1,4 +1,13 @@
 <?php
+
+$stmt = $dbh->prepare("SELECT COUNT(*) cnt FROM fav_users");
+$stmt->execute();
+$fav_count = $stmt->fetch()->cnt;
+
+if ($fav_count == 0) {
+	die("Книжные полки не определены");
+}
+
 $stmt = $dbh->prepare("SELECT *
 		FROM fav
 		LEFT JOIN libavtorname USING(AvtorId)
