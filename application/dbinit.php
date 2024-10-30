@@ -9,7 +9,7 @@ if (getenv('FLIBUSTA_DBPASSWORD_FILE')){
 if (empty($dbpasswd))
 	$dbpasswd = getenv('FLIBUSTA_DBPASSWORD')?getenv('FLIBUSTA_DBPASSWORD'):'flibusta';
 
-$dbtype = getenv('FLIBUSTA_DB_TYPE')?trim(strtolower(getenv('FLIBUSTA_DB_TYPE'))):'postgres';
+$dbtype = getenv('FLIBUSTA_DBTYPE')?trim(strtolower(getenv('FLIBUSTA_DBTYPE'))):'postgres';
 if ($dbtype != 'postgres') { // check for valid type, currently only postgress is supported, but in the future others e.g. mysql will be added
 	error_log('unsupported db type '.$dbtype.', reverting to postgress');
 	$dbtype = 'postgres';
