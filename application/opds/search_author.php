@@ -45,7 +45,7 @@ while ($a = $authors->fetch()) {
 		$books_cnt = $stmt->fetch()->cnt;
 		$stmt = null;
 		echo " <content type='text'>$books_cnt книг</content>";
-		echo " <link href='/opds/list?author_id=$a->avtorid' type='application/atom+xml;profile=opds-catalog' />";
+		echo " <link href='/opds/author?author_id=$a->avtorid' type='application/atom+xml;profile=opds-catalog' />";
 		echo '</entry>';
 	}
 }

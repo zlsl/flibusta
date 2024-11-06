@@ -6,6 +6,9 @@ switch ($url->action) {
 	case 'authorsindex':
 		include('authorsindex.php');
 		break;
+	case 'author':
+		include('author.php');
+		break;
 	case 'sequencesindex':
 		include('sequencesindex.php');
 		break;

@@ -608,7 +608,7 @@ function opds_book($b) {
 	$au->execute();
 	while ($a = $au->fetch()) {
 		echo "<name>$a->lastname $a->firstname $a->middlename</name>";
-		echo " <uri>/a/id</uri>";
+		echo "<uri>/opds/author?author_id=$a->avtorid</uri>";
 	}
 	echo "</author>";
 	$au->execute();
@@ -637,7 +637,7 @@ function opds_book($b) {
 	echo "\n Размер: " . formatSizeUnits($b->filesize);
 	echo "\n </summary>";
 
-	echo "\n <link rel='http://opds-spec.org/image/thumbnail' href='/extract_cover.php?sid=$b->bookid' type='image/jpeg'/>";
+	echo "\n <link rel='http://opds-spec.org/image/thumbnail' href='/extract_cover.php?id=$b->bookid' type='image/jpeg'/>";
 	echo "\n <link rel='http://opds-spec.org/image' href='/extract_cover.php?id=$b->bookid' type='image/jpeg'/>";
 	if (trim($b->filetype) == 'fb2') {
 		$ur = 'fb2';
