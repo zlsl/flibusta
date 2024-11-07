@@ -11,6 +11,7 @@ if (isset($_GET['genre_id'])) {
 	$gid = intval($_GET['genre_id']);
 	$filter .= 'AND genreid=:gid ';
 	$join .= 'LEFT JOIN libgenre g USING(BookId) ';
+	$orderby = ' time DESC ';
 	$stmt = $dbh->prepare("SELECT * FROM libgenrelist
 		WHERE genreid=:gid");
 	$stmt->bindParam(":gid", $gid);
@@ -23,23 +24,38 @@ if (isset($_GET['seq_id'])) {
 	$sid = intval($_GET['seq_id']);
 	$filter .= 'AND seqid=:sid';
 	$join .= 'LEFT JOIN libseq s USING(BookId) ';
+	$orderby = " s.seqnumb ";
 	$stmt = $dbh->prepare("SELECT * FROM libseqname
 		WHERE seqid=:sid");
 	$stmt->bindParam(":sid", $sid);
 	$stmt->execute();
 	$s = $stmt->fetch();
-	$title = "в Сборник: $s->seqname";
+	$title = "в сборнике $s->seqname";
 }
 
 if (isset($_GET['author_id'])) {
 	$aid = intval($_GET['author_id']);
 	$filter .= 'AND avtorid=:aid ';
 	$join .= 'JOIN libavtor USING (bookid) JOIN libavtorname USING (avtorid) ';
+	
+	$display_type = (isset($_GET['display_type']))? ($_GET['display_type'] ?? '') : '';
+	if ($display_type == 'sequenceless') {
+		$filter .= 'AND s.seqid is null ';
+		$join .= ' LEFT JOIN libseq s ON s.bookId= b.bookId ';
+		$orderby = ' time DESC ';
+	} else if ($display_type == 'year'){
+		$orderby = ' year ';
+	} else if ($display_type == 'alphabet') {
+		$orderby = ' title ';
+	} else {
+		$orderby = ' time DESC ';
+	}
 	$stmt = $dbh->prepare("SELECT * FROM libavtorname WHERE avtorid=:aid");
 	$stmt->bindParam(":aid", $aid);
 	$stmt->execute();
 	$a = $stmt->fetch();
-	$title = "$a->lastname $a->firstname $a->middlename -- $a->nickname";
+	$title = ($a->nickname !='')?"$a->firstname $a->middlename $a->lastname ($a->nickname)"
+			:"$a->firstname  $a->middlename $a->lastname";
 }
 
 echo <<< _XML
@@ -55,12 +71,12 @@ echo <<< _XML
 <link href="/opds/" rel="start" type="application/atom+xml;profile=opds-catalog" />\n
 _XML;
 
-$books = $dbh->prepare("SELECT *
+$books = $dbh->prepare("SELECT b.*
 	FROM libbook b
 	$join
 	WHERE
 	$filter
-	ORDER BY time DESC
+	ORDER BY $orderby
 	LIMIT ". OPDS_FEED_COUNT);
 
 if (isset($_GET['genre_id'])) {
