@@ -58,9 +58,7 @@ if (isset($_GET['author_id'])) {
 	$a = $stmt->fetch();
 	$title = ($a->nickname !='')?"$a->firstname $a->middlename $a->lastname ($a->nickname)"
 			:"$a->firstname  $a->middlename $a->lastname";
-} else {
-	$orderby = ' time DESC';
-}
+} 
 
 echo <<< _XML
 <feed xmlns="http://www.w3.org/2005/Atom" xmlns:dc="http://purl.org/dc/terms/" xmlns:os="http://a9.com/-/spec/opensearch/1.1/" xmlns:opds="http://opds-spec.org/2010/catalog">
