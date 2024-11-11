@@ -58,6 +58,8 @@ if (isset($_GET['author_id'])) {
 	$a = $stmt->fetch();
 	$title = ($a->nickname !='')?"$a->firstname $a->middlename $a->lastname ($a->nickname)"
 			:"$a->firstname  $a->middlename $a->lastname";
+} else {
+	$orderby = ' time DESC';
 }
 
 echo <<< _XML
