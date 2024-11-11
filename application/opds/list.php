@@ -5,6 +5,8 @@ echo '<?xml version="1.0" encoding="utf-8"?>';
 $filter = "deleted='0' ";
 $join = '';
 
+$orderby = ' time DESC ';
+
 $title = 'в новинках';
 
 if (isset($_GET['genre_id'])) {
