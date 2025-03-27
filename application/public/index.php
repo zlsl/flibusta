@@ -3,7 +3,7 @@ ob_start();
 
 include("../init.php");
 session_start();
-decode_gurl();
+decode_gurl($webroot);
 
 $user_name = 'Книжные полки';
 if (isset($_GET['login_uuid'])) {

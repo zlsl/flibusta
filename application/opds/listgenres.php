@@ -6,9 +6,9 @@ echo "<title>Жанры в ".$_GET['id']."</title>";
 echo "<updated>$cdt</updated>";
 echo  <<< _XML
  <icon>/favicon.ico</icon>
- <link href="/opds-opensearch.xml" rel="search" type="application/opensearchdescription+xml" />
- <link href="/opds/search?q={searchTerms}" rel="search" type="application/atom+xml" />
- <link href="/opds/" rel="start" type="application/atom+xml;profile=opds-catalog" />
+ <link href="$webroot/opds-opensearch.xml.php" rel="search" type="application/opensearchdescription+xml" />
+ <link href="$webroot/opds/search?q={searchTerms}" rel="search" type="application/atom+xml" />
+ <link href="$webroot/opds/" rel="start" type="application/atom+xml;profile=opds-catalog" />
 
  _XML;
 
@@ -24,7 +24,7 @@ while ($g = $gs->fetch()) {
 	echo " <id>tag:genre:$g->genrecode</id>";
 	echo " <title>$g->genredesc</title>";
 	echo " <content type='text'>Книг: $g->cnt</content>";
-	echo " <link href='/opds/list/?genre_id=$g->genreid' type='application/atom+xml;profile=opds-catalog' />";
+	echo " <link href='$webroot/opds/list/?genre_id=$g->genreid' type='application/atom+xml;profile=opds-catalog' />";
 	echo "</entry>\n";
 }
 echo '</feed>';

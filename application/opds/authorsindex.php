@@ -15,9 +15,9 @@ echo <<< _XML
  <title>Книги по авторам</title>
  <updated>$cdt</updated>
  <icon>/favicon.ico</icon>
- <link href="/opds-opensearch.xml" rel="search" type="application/opensearchdescription+xml" />
- <link href="/opds/authorsindex?letters={searchTerms}" rel="search" type="application/atom+xml" />
- <link href="/opds" rel="start" type="application/atom+xml;profile=opds-catalog" />\n
+ <link href="$webroot/opds-opensearch.xml.php" rel="search" type="application/opensearchdescription+xml" />
+ <link href="$webroot/opds/authorsindex?letters={searchTerms}" rel="search" type="application/atom+xml" />
+ <link href="$webroot/opds" rel="start" type="application/atom+xml;profile=opds-catalog" />\n
 _XML;
 
 $query="
@@ -33,9 +33,9 @@ while ($ach = $ai->fetchObject()) {
 	echo "<title>$ach->alpha</title>";
 	echo "<content type='text'>$ach->cnt авторов на $ach->alpha</content>";
 	if ($ach->cnt>500) {
-		$url="/opds/authorsindex?letters=$ach->alpha";
+		$url="$webroot/opds/authorsindex?letters=$ach->alpha";
 	} else {
-		$url="/opds/search?by=author&amp;q=$ach->alpha";
+		$url="$webroot/opds/search?by=author&amp;q=$ach->alpha";
 	}
 	echo "<link href='$url' type='application/atom+xml;profile=opds-catalog' />";
 	echo "</entry>";

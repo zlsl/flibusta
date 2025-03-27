@@ -8,7 +8,7 @@
 
 <?php
 
-
+include_once(ROOT_PATH . "webroot.php");
 $filter2 = "";
 $letter = 'А%';
 $get = '';
@@ -40,7 +40,7 @@ echo "<ul class='pagination'>";
 		} else {
 			$cc = '';
 		}
-		echo "<li class='page-item $cc'><a class='page-link' href='/authors/?letter=" . urlencode($l) . "'>$l</a></li>";
+		echo "<li class='page-item $cc'><a class='page-link' href='$webroot/authors/?letter=" . urlencode($l) . "'>$l</a></li>";
 	}
 echo "</ul>";
 echo "<ul class='pagination'>";
@@ -51,13 +51,14 @@ echo "<ul class='pagination'>";
 		} else {
 			$cc = '';
 		}
-		echo "<li class='page-item $cc'><a class='page-link' href='/authors/?letter=" . urlencode($l) . "'>$l</a></li>";
+		echo "<li class='page-item $cc'><a class='page-link' href='$webroot/authors/?letter=" . urlencode($l) . "'>$l</a></li>";
 	}
 
 echo "</ul>";
 
+
+echo "<form action='$webroot/authors/'>\n";
 ?>
-<form action='/authors/'>
 <div class="input-group mb-3">
   <input name="q" type="text" class="form-control" placeholder="Поиск автора" aria-label="Поиск серии" aria-describedby="basic-addon2">
   <div class="input-group-append">
@@ -89,9 +90,9 @@ show_gpager(ceil($cnt / AUTHORS_PAGE), 5);
 while ($a = $stmt->fetch()) {
 	if ($a->cnt > 0) {
 		echo "<div class='col col-sm-6 mb-3 d-flex justify-content-between'>";
-		echo "<a class='mw-100 rounded-pill author' href='/author/view/$a->avtorid'>";
+		echo "<a class='mw-100 rounded-pill author' href='$webroot/author/view/$a->avtorid'>";
 		if ($a->file != '') {
-			echo "<img class='rounded-circle contact' src='/extract_author.php?id=$a->avtorid' />";	
+			echo "<img class='rounded-circle contact' src='$webroot/extract_author.php?id=$a->avtorid' />";	
 		}
 		echo "&nbsp;$a->lastname $a->firstname $a->middlename $a->nickname&nbsp;</a>";
 		echo "<div class='badge bg-secondary'>$a->cnt</div>";

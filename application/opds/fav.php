@@ -9,11 +9,11 @@ _XML;
 echo "<updated>$cdt</updated>";
 echo <<< _XML
 <icon>/favicon.ico</icon>
-<link href="/opds-opensearch.xml" rel="search" type="application/opensearchdescription+xml" />
-<link href="/opds/search?q={searchTerms}" rel="search" type="application/atom+xml" />
-<link href="/opds/" rel="start" type="application/atom+xml;profile=opds-catalog" />
+<link href="$webroot/opds-opensearch.xml.php" rel="search" type="application/opensearchdescription+xml" />
+<link href="$webroot/opds/search?q={searchTerms}" rel="search" type="application/atom+xml" />
+<link href="$webroot/opds/" rel="start" type="application/atom+xml;profile=opds-catalog" />
 _XML;
-echo '<link href="/opds/fav/?uuid='.$_GET['uuid'].' rel="self" type="application/atom+xml;profile=opds-catalog" />';
+echo "<link href=".$webroot.'/opds/fav/?uuid='.$_GET['uuid'].' rel="self" type="application/atom+xml;profile=opds-catalog" />';
  
 $uuid = $_GET['uuid'];
 $books = $dbh->prepare("SELECT DISTINCT b.*
@@ -24,7 +24,7 @@ $books->bindParam(":uuid", $uuid);
 $books->execute();
 
 while ($b = $books->fetch()) {
-	opds_book($b);
+	opds_book($b, $webroot);
 }
 
 echo "</feed>";

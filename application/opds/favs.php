@@ -8,10 +8,10 @@ echo <<< _XML
  echo "<updated>$cdt</updated>";
  echo <<< _XML
  <icon>/favicon.ico</icon>
- <link href="/opds-opensearch.xml" rel="search" type="application/opensearchdescription+xml" />
- <link href="/opds/search?q={searchTerms}" rel="search" type="application/atom+xml" />
- <link href="/opds/" rel="start" type="application/atom+xml;profile=opds-catalog" />
- <link href="/opds/favs/" rel="self" type="application/atom+xml;profile=opds-catalog" />
+ <link href="$webroot/opds-opensearch.xml.php" rel="search" type="application/opensearchdescription+xml" />
+ <link href="$webroot/opds/search?q={searchTerms}" rel="search" type="application/atom+xml" />
+ <link href="$webroot/opds/" rel="start" type="application/atom+xml;profile=opds-catalog" />
+ <link href="$webroot/opds/favs/" rel="self" type="application/atom+xml;profile=opds-catalog" />
 _XML;
 
 $favs = $dbh->prepare("SELECT * FROM fav_users");
@@ -22,7 +22,7 @@ while ($fav = $favs->fetch()) {
 	echo " <id>tag:fav:$fav->user_uuid</id>";
 	echo " <title>$fav->name</title>";
 	echo " <content type='text'></content>";
-	echo " <link href='/opds/fav/?uuid=$fav->user_uuid' type='application/atom+xml;profile=opds-catalog' />";
+	echo " <link href='$webroot/opds/fav/?uuid=$fav->user_uuid' type='application/atom+xml;profile=opds-catalog' />";
 	echo "</entry>";
 }
 

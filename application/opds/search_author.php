@@ -6,16 +6,16 @@ echo <<< _XML
  <title>Поиск по авторам</title>
  <updated>$cdt</updated>
  <icon>/favicon.ico</icon>
- <link href="/opds-opensearch.xml" rel="search" type="application/opensearchdescription+xml" />
- <link href="/opds/authorsindex?letters={searchTerm}" rel="search" type="application/atom+xml" />
- <link href="/opds" rel="start" type="application/atom+xml;profile=opds-catalog" />
+ <link href="$webroot/opds-opensearch.xml.php" rel="search" type="application/opensearchdescription+xml" />
+ <link href="$webroot/opds/authorsindex?letters={searchTerm}" rel="search" type="application/atom+xml" />
+ <link href="$webroot/opds" rel="start" type="application/atom+xml;profile=opds-catalog" />
 
 
 <entry> <updated>$cdt</updated>
  <id>tag:search:author</id>
  <title>Поиск авторов</title>
  <content type="text">Поиск авторов по фамилии</content>
- <link href="/opds/authorsindex?letters={searchTerm}" type="application/atom+xml;profile=opds-catalog" />
+ <link href="$webroot/opds/authorsindex?letters={searchTerm}" type="application/atom+xml;profile=opds-catalog" />
 </entry>
 _XML;
 
@@ -45,7 +45,7 @@ while ($a = $authors->fetch()) {
 		$books_cnt = $stmt->fetch()->cnt;
 		$stmt = null;
 		echo " <content type='text'>$books_cnt книг</content>";
-		echo " <link href='/opds/author?author_id=$a->avtorid' type='application/atom+xml;profile=opds-catalog' />";
+		echo " <link href='$webroot/opds/author?author_id=$a->avtorid' type='application/atom+xml;profile=opds-catalog' />";
 		echo '</entry>';
 	}
 }

@@ -1,6 +1,6 @@
 <?php
-$dbname = getenv('FLUBUSTA_DBNAME')?getenv('FLUBUSTA_DBNAME'):'flibusta';
-$dbhost = getenv('FLUBUSTA_DBHOST')?getenv('FLUBUSTA_DBHOST'):'postgres';
+$dbname = getenv('FLIBUSTA_DBNAME')?getenv('FLIBUSTA_DBNAME'):'flibusta';
+$dbhost = getenv('FLIBUSTA_DBHOST')?getenv('FLIBUSTA_DBHOST'):'postgres';
 $dbuser = getenv('FLIBUSTA_DBUSER')?getenv('FLIBUSTA_DBUSER'):'flibusta';
 if (getenv('FLIBUSTA_DBPASSWORD_FILE')){
 		$dbpasswd = file_get_contents(getenv('FLIBUSTA_DBPASSWORD_FILE'));

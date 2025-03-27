@@ -8,7 +8,6 @@
 
 <?php
 
-
 $filter2 = "";
 $letter = 'А%';
 $get = '';
@@ -40,7 +39,7 @@ echo "<ul class='pagination'>";
 		} else {
 			$cc = '';
 		}
-		echo "<li class='page-item $cc'><a class='page-link' href='/series/?letter=" . urlencode($l) . "'>$l</a></li>";
+		echo "<li class='page-item $cc'><a class='page-link' href='$webroot/series/?letter=" . urlencode($l) . "'>$l</a></li>";
 	}
 echo "</ul>";
 echo "<ul class='pagination'>";
@@ -51,13 +50,14 @@ echo "<ul class='pagination'>";
 		} else {
 			$cc = '';
 		}
-		echo "<li class='page-item $cc'><a class='page-link' href='/series/?letter=" . urlencode($l) . "'>$l</a></li>";
+		echo "<li class='page-item $cc'><a class='page-link' href='$webroot/series/?letter=" . urlencode($l) . "'>$l</a></li>";
 	}
 
 echo "</ul>";
 
+
+echo "<form action='$webroot/series/'>\n";
 ?>
-<form action='/series/'>
 <div class="input-group mb-3">
   <input name="q" type="text" class="form-control" placeholder="Поиск серии" aria-label="Поиск серии" aria-describedby="basic-addon2">
   <div class="input-group-append">
@@ -87,7 +87,7 @@ echo '<div class="row">';
 show_gpager(ceil($cnt / SERIES_PAGE), 5);
 while ($bs = $stmt->fetch()) {
 	if ($bs->cnt > 0) {
-		echo "<div class='col col-sm-6 mb-3 d-flex justify-content-between'><a class='mw-100 text-dark' href='/?sid=$bs->seqid'>$bs->seqname</a><span class='badge bg-secondary'>$bs->cnt</span></div>";
+		echo "<div class='col col-sm-6 mb-3 d-flex justify-content-between'><a class='mw-100 text-dark' href='$webroot/?sid=$bs->seqid'>$bs->seqname</a><span class='badge bg-secondary'>$bs->cnt</span></div>";
 	}
 }
 echo "</div>";

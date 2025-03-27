@@ -1,5 +1,5 @@
 <?php
-echo "<script>var url = '/usr.php?id=$url->var1';</script>";
+echo "<script>var url = '$webroot/usr.php?id=$url->var1';</script>";
 
 function nl2p($string) {
     $paragraphs = '';
@@ -12,7 +12,7 @@ function nl2p($string) {
 
     return $paragraphs;
 }
-book_info_pg($book, true);
+book_info_pg($book, $webroot, true);
 
 echo "<div class='card card-body p-3'><ul>";
 
