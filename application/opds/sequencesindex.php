@@ -15,9 +15,9 @@ echo <<< _XML
  <title>Книги по сериям</title>
  <updated>$cdt</updated>
  <icon>/favicon.ico</icon>
- <link href="/opds-opensearch.xml" rel="search" type="application/opensearchdescription+xml" />
- <link href="/opds/authorsindex?letters={searchTerms}" rel="search" type="application/atom+xml" />
- <link href="/opds" rel="start" type="application/atom+xml;profile=opds-catalog" />\n
+ <link href="$webroot/opds-opensearch.xml.php" rel="search" type="application/opensearchdescription+xml" />
+ <link href="$webroot/opds/authorsindex?letters={searchTerms}" rel="search" type="application/atom+xml" />
+ <link href="$webroot/opds" rel="start" type="application/atom+xml;profile=opds-catalog" />\n
 _XML;
 
 $query="
@@ -36,7 +36,7 @@ while ($ach = $ai->fetchObject()) {
 	    echo "<id>tag:sequences:".urlencode($ach->alpha)."</id>\n";
 	    echo "<title>".htmlspecialchars($ach->alpha)."</title>\n";
 	    echo "<content type='text'>$ach->cnt книжных серий на ".htmlspecialchars($ach->alpha)."</content>\n";
-        echo "<link href='/opds/sequencesindex?letters=".urlencode($ach->alpha)."' type='application/atom+xml;profile=opds-catalog' />\n";
+        echo "<link href='$webroot/opds/sequencesindex?letters=".urlencode($ach->alpha)."' type='application/atom+xml;profile=opds-catalog' />\n";
 		echo "</entry>";
 	} else {
         // list individual serie
@@ -51,7 +51,7 @@ while ($ach = $ai->fetchObject()) {
 	        echo "<id>tag:sequence:$s->seqid</id>\n";
             echo "<title>". htmlspecialchars($s->seqname)."</title>\n";
             echo " <content type='text'></content>";
-	        echo " <link href='/opds/list?seq_id=" . $s->seqid . "' type='application/atom+xml;profile=opds-catalog' />";
+	        echo " <link href='$webroot/opds/list?seq_id=" . $s->seqid . "' type='application/atom+xml;profile=opds-catalog' />";
 	        echo "</entry>";
         }
         $sq = null;

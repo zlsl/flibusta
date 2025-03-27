@@ -6,9 +6,8 @@ window.addEventListener('scroll', function ( event ) {
 	isScrolling = setTimeout(function() {
 		console.log( this.scrollY );
 		var x = new XMLHttpRequest();
-		x.open("GET", "/save_position.php?<?php
-		echo "user_uuid=$user_uuid&bookid=$url->var1&pos=";
-		?>" + (100 / document.body.scrollHeight * this.scrollY), true);
+		x.open("GET", "<?php echo "$webroot/save_position.php?user_uuid=$user_uuid&bookid=$url->var1&pos=";?>" 
+		+ (100 / document.body.scrollHeight * this.scrollY), true);
 		x.send(null);
 	}, 66);
 
@@ -17,7 +16,6 @@ window.addEventListener('scroll', function ( event ) {
 
 
 <?php
-
 
 if ($user_uuid != "") {
 	$stmt = $dbh->prepare("SELECT pos FROM progress WHERE user_uuid=:uuid AND bookid=:id LIMIT 1");

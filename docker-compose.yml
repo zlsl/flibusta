@@ -36,7 +36,7 @@ services:
             - './phpdocker/php-fpm/php-fpm.conf:/usr/local/etc/php-fpm.d/zz-php-fpm.conf'
         environment:
             - FLIBUSTA_DBUSER=flibusta
-            - FLUBUSTA_DBNAME=flibusta
+            - FLIBUSTA_DBNAME=flibusta
             - FLIBUSTA_DBTYPE=postgres
             - FLIBUSTA_DBHOST=postgres
             - FLIBUSTA_DBPASSWORD_FILE=/run/secrets/FLIBUSTA_PWD

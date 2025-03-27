@@ -39,8 +39,8 @@ while ($bg = $stmt->fetch()) {
 	$st2->execute();
 	while ($g = $st2->fetch()) {	
 		echo "<div class='mb-1'>";
-		echo "<a class='btn btn-outline-primary btn-sm' href='/?gid=$g->genreid/'>$g->genredesc</a> ";
-		echo "<a class='btn btn-outline-danger btn-sm' href='/?xgid=$g->genreid'>Исключить</a>";
+		echo "<a class='btn btn-outline-primary btn-sm' href='$webroot/?gid=$g->genreid/'>$g->genredesc</a> ";
+		echo "<a class='btn btn-outline-danger btn-sm' href='$webroot/?xgid=$g->genreid'>Исключить</a>";
 	        echo "<span class='float-sm-end'>$g->cnt</span></div>";
 	}
 	

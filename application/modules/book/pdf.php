@@ -1,9 +1,10 @@
-<script src="/js/pdf.js"></script>
+<?php
+echo "<script src='$webroot/js/pdf.js'></script>\n"; ?>
 
 <script>
 var pdfjsLib = window['pdfjs-dist/build/pdf'];
 
-pdfjsLib.GlobalWorkerOptions.workerSrc = '/js/pdf.worker.js';
+<?php echo "pdfjsLib.GlobalWorkerOptions.workerSrc = '$webroot/js/pdf.worker.js';\n"; ?>
 
 var currPage = 1;
 var numPages = 0;

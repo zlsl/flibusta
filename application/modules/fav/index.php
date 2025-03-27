@@ -1,5 +1,4 @@
 <?php
-
 $stmt = $dbh->prepare("SELECT COUNT(*) cnt FROM fav_users");
 $stmt->execute();
 $fav_count = $stmt->fetch()->cnt;
@@ -24,9 +23,9 @@ try {
 echo '<div class="row">';
 while ($a = $stmt->fetch()) {
 	echo "<div class='col col-sm-333 mb-3 d-flex justify-content-between'>";
-	echo "<a class='mw-100 rounded-pill author' href='/author/view/$a->avtorid'>";
+	echo "<a class='mw-100 rounded-pill author' href='$webroot/author/view/$a->avtorid'>";
 	if ($a->file != '') {
-		echo "<img class='rounded-circle contact' src='/extract_author.php?id=$a->avtorid' />";	
+		echo "<img class='rounded-circle contact' src='$webroot/extract_author.php?id=$a->avtorid' />";	
 	}
 	echo "&nbsp;$a->lastname $a->firstname $a->middlename $a->nickname&nbsp;</a>";
 	echo "</div>";
@@ -46,7 +45,7 @@ echo '<div class="block">';
 try {
 $stmt->execute();
 while ($s = $stmt->fetch()) {
-	echo "<a class='btn btn-sm btn-dark' href='/?sid=$s->seqid'>";
+	echo "<a class='btn btn-sm btn-dark' href='$webroot/?sid=$s->seqid'>";
 	echo "&nbsp;$s->seqname&nbsp;</a> ";
 }
 
@@ -77,7 +76,7 @@ while ($book = $stmt->fetch()) {
 	if ($c > 10) {
 //		break;
 	}
-	book_small_pg($book);
+	book_small_pg($book,$webroot);
 }
 echo "</div>";
 echo "</div>";

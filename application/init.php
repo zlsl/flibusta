@@ -8,7 +8,7 @@ define('OPDS_FEED_COUNT', 100);
 define('COUNT_BOOKS', true);
 include(ROOT_PATH . 'functions.php');
 include(ROOT_PATH . 'dbinit.php');
-
+include_once(ROOT_PATH . 'webroot.php');
 session_set_cookie_params(3600 * 24 * 31 * 12,"/");
 #session_start();
 

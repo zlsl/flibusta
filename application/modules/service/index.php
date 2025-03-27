@@ -5,7 +5,6 @@
 <h4 class="rounded-top p-1" style="background: #d0d0d0;">Статистика</h4>
 <div class='card-body'>
 <?php
-
 $status_import = (trim(shell_exec('ps aux|grep app_|grep -v grep') ?? '') !== '');
 
 function get_ds($path){
@@ -46,19 +45,19 @@ if (!$status_import) {
 if (isset($_GET['empty'])) {
 	shell_exec('rm /application/cache/authors/*');
 	shell_exec('rm /application/cache/covers/*');
-	header("location:/service/");
+	header("location:$webroot/service/");
 }
 
 if (!$status_import) {
 	if (isset($_GET['import'])) {
 		shell_exec('stdbuf -o0 /application/tools/app_import_sql.sh 2>/dev/null >/dev/null &');
 		$status_fetch = true;
-		header("location:/service/");
+		header("location:$webroot/service/");
 	}
 	if (isset($_GET['reindex'])) {
 		shell_exec('stdbuf -o0 /application/tools/app_reindex.sh 2>/dev/null >/dev/null &');
 		$status_fetch = true;
-		header("location:/service/");
+		header("location:$webroot/service/");
 	}
 }
 
@@ -99,7 +98,7 @@ if ($status_import) {
 Чтобы отображались фото авторов и обложек для форматов, отличных от FB2, необходимо разместить в каталоге cache файлы архивов lib.a.attached.zip и lib.b.attached.zip соответственно.
 В кэше хранятся распакованные фото авторов и обложек для FB2, а также их уменьшенные версии.</p>
 <p>Файлы архивов Флибусты (*.zip) необходимо размещать в каталоге Flibusta.Net. Обрабатываются также файлы ежедневных обновлений, но обязательно необходимо подгружать свежие SQL файлы.</p>
-<p>Доступен также OPDS-каталог для читалок: <a href='/opds/'>/opds/</a></p>
+<?php echo "<p>Доступен также OPDS-каталог для читалок: <a href='$webroot/opds/'>/opds/</a></p>"; ?>
 <p><b>Каталоги FlibustaSQL, cache и их подкаталоги должны иметь права на запись для контейнера. Скрипты в каталоге /application/tools/ должны иметь права на выполнение.</b></p>
 </div></div></div></div>
 

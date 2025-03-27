@@ -70,9 +70,9 @@ echo "<title>Книги $title</title>";
 echo "<updated>$cdt</updated>";
 echo <<< _XML
 <icon>/favicon.ico</icon>
-<link href="/opds-opensearch.xml" rel="search" type="application/opensearchdescription+xml" />
-<link href="/opds/search?q={searchTerms}" rel="search" type="application/atom+xml" />
-<link href="/opds/" rel="start" type="application/atom+xml;profile=opds-catalog" />\n
+<link href="$webroot/opds-opensearch.xml.php" rel="search" type="application/opensearchdescription+xml" />
+<link href="$webroot/opds/search?q={searchTerms}" rel="search" type="application/atom+xml" />
+<link href="$webroot/opds/" rel="start" type="application/atom+xml;profile=opds-catalog" />\n
 _XML;
 
 $books = $dbh->prepare("SELECT b.*
@@ -98,7 +98,7 @@ if (isset($_GET['author_id'])) {
 $books->execute();
 
 while ($b = $books->fetch()) {
-	opds_book($b);
+	opds_book($b, $webroot);
 }
 
 echo "</feed>";

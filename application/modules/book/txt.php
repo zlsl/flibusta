@@ -1,4 +1,5 @@
 <?php
+
 $content = $zip->getFromName("$url->var1.txt");
 if (!mb_detect_encoding($content, 'UTF-8', true)) {
 	$content =iconv('windows-1251//IGNORE', 'UTF-8//IGNORE', $content);
