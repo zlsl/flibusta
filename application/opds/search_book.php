@@ -6,9 +6,9 @@ echo <<< _XML
  <title>Поиск по книгам</title>
  <updated>$cdt</updated>
  <icon>/favicon.ico</icon>
- <link href="/opds-opensearch.xml" rel="search" type="application/opensearchdescription+xml" />
- <link href="/opds/search?q={searchTerms}" rel="search" type="application/atom+xml" />
- <link href="/opds" rel="start" type="application/atom+xml;profile=opds-catalog" />
+ <link href="$webroot/opds-opensearch.xml.php" rel="search" type="application/opensearchdescription+xml" />
+ <link href="$webroot/opds/search?q={searchTerms}" rel="search" type="application/atom+xml" />
+ <link href="$webroot/opds" rel="start" type="application/atom+xml;profile=opds-catalog" />
 _XML;
 
 $q = $_GET['q'];
@@ -48,9 +48,9 @@ while ($b = $books->fetchObject()) {
 	echo "</author>";
 	echo " <content type='text/html'>" . htmlspecialchars($b->body ?? '') . "</content>";
 
-	echo "<link rel='http://opds-spec.org/image/thumbnail' href='/extract_cover.php?id=$b->bookid' type='image/jpeg'/>";
-	echo "<link rel='http://opds-spec.org/image' href='/extract_cover.php?id=$b->bookid' type='image/jpeg'/>";
-	echo " <link href='/fb2.php?id=$b->bookid' rel='http://opds-spec.org/acquisition/open-access' type='application/fb2+zip' />";
+	echo "<link rel='http://opds-spec.org/image/thumbnail' href='$webroot/extract_cover.php?id=$b->bookid' type='image/jpeg'/>";
+	echo "<link rel='http://opds-spec.org/image' href='$webroot/extract_cover.php?id=$b->bookid' type='image/jpeg'/>";
+	echo " <link href='$webroot/fb2.php?id=$b->bookid' rel='http://opds-spec.org/acquisition/open-access' type='application/fb2+zip' />";
 
 	echo "</entry>\n";
 }

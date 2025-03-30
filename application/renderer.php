@@ -17,17 +17,18 @@
 		$title = 'Библиотека';
 	}
 	echo "<title>$title</title>";
+	include_once(ROOT_PATH . 'webroot.php');
+echo <<< __HTML
+
+<link href="$webroot/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+<script src="$webroot/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+<link rel="icon" href="$webroot/favicon.svg" sizes="any" type="image/svg+xml">
+
+<link href="$webroot/css/all.min.css" rel="stylesheet">
+<link href="$webroot/css/style.css" rel="stylesheet">
+__HTML
 ?>
-
-<link href="/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-<script src="/bootstrap/js/bootstrap.bundle.min.js"></script>
-
-<link rel="icon" href="/favicon.svg" sizes="any" type="image/svg+xml">
-
-<link href="/css/all.min.css" rel="stylesheet">
-<link href="/css/style.css" rel="stylesheet">
-
-
 <style>
 .pagination>li.active>a {
   background-color: #777 !important;
@@ -89,28 +90,29 @@ switch ($url->mod) {
 
 
 
-?>
+echo <<< __HTML
 
 <body style='background-color: #343a40;'>
 
 <div class="container whb">
 <nav class="navbar navbar-expand-lg navbar-dark rounded-bottom shadow" style="background-color: #3e3b6c;">
 <div class="container-fluid">
-  <a class="navbar-brand" href="/" title="Библиотека">
+  <a class="navbar-brand" href="$webroot/" title="Библиотека">
    &nbsp;Библиотека
   </a>
 		<ul class="navbar-nav mr-auto">
-			<li class="nav-item <?php echo $c1; ?>"><a title="" class="nav-link" href="/">Книги</a></li>
-			<li class="nav-item <?php echo $c2; ?>"><a title="" class="nav-link" href="/genres/">Жанры</a></li>
-			<li class="nav-item <?php echo $c4; ?>"><a title="" class="nav-link" href="/authors/">Авторы</a></li>
-			<li class="nav-item <?php echo $c3; ?>"><a title="" class="nav-link" href="/series/">Серии</a></li>
-			<li class="nav-item <?php echo $c5; ?>"><a title="" class="nav-link" href="/fav/">Полка</a></li>
-			<li class="nav-item <?php echo $c6; ?>"><a title="" class="nav-link" href="/service/">Сервис</a></li>
+			<li class="nav-item $c1"><a title="" class="nav-link" href="$webroot/">Книги</a></li>
+			<li class="nav-item $c2"><a title="" class="nav-link" href="$webroot/genres/">Жанры</a></li>
+			<li class="nav-item $c4"><a title="" class="nav-link" href="$webroot/authors/">Авторы</a></li>
+			<li class="nav-item $c3"><a title="" class="nav-link" href="$webroot/series/">Серии</a></li>
+			<li class="nav-item $c5"><a title="" class="nav-link" href="$webroot/fav/">Полка</a></li>
+			<li class="nav-item $c6"><a title="" class="nav-link" href="$webroot/service/">Сервис</a></li>
 		</ul>
 
 <div class="d-flex">
-<?php
-echo "<a href='/favlist/' class='btn btn-outline-success' type='submit'>$user_name</a>"
+
+<a href='$webroot/favlist/' class='btn btn-outline-success' type='submit'>$user_name</a>
+__HTML
 ?>
 </div>
 

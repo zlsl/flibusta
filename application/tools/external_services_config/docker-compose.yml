@@ -1,0 +1,48 @@
+services:
+
+   flibusta-fpm:
+        build: phpdocker/php-fpm
+        working_dir: /application
+        container_name: flibusta-fpm
+        environment:
+           - PUID=${APPUSER_PUID}
+           - PGID=${APPUSER_PGID}
+           - TZ=${TIME_ZONE_VALUE}
+           - FLIBUSTA_WEBROOT=/mylib
+           - FLIBUSTA_DBUSER=flibusta
+           - FLIBUSTA_DBNAME=flibusta
+           - FLIBUSTA_DBTYPE=postgres
+           - FLIBUSTA_DBHOST=postgresdb
+           - FLIBUSTA_DBPASSWORD_FILE=/run/secrets/FLIBUSTA_PWD
+           - POSTGRES_ADMIN_USER=postgres
+           - POSTGRES_ADMIN_DBPASSWORD_FILE=/run/secrets/POSTGRES_ADMIN_PWD
+           - DB_HOST_PINGS=3
+        command: /application/tools/external_services_config/flibusta_entrypoint.sh
+        networks:
+           flibusta_net:
+             ipv4_address: 172.101.0.101
+           postgres_db_net:
+        volumes:
+            - './application:/application'
+            - './cache:/application/cache'
+            - './Flibusta.Net:/application/flibusta'
+            - './FlibustaSQL:/application/sql'
+            - './phpdocker/php-fpm/php-ini-overrides.ini:/usr/local/etc/php/conf.d/local-custom.ini'
+            - './phpdocker/php-fpm/php-fpm.conf:/usr/local/etc/php-fpm.d/zz-php-fpm.conf'
+            - './FlibustaSQL/lib.a.attached.zip:/application/cache/lib.a.attached.zip:ro'
+            - './FlibustaSQL/lib.b.attached.zip:/application/cache/lib.b.attached.zip:ro'
+        secrets:
+            - FLIBUSTA_PWD
+            - POSTGRES_ADMIN_PWD
+
+secrets:
+   FLIBUSTA_PWD:
+      file: ./secrets/flibusta_pwd.txt
+   POSTGRES_ADMIN_PWD:
+      file: ./secrets/postgres_admin_pwd.txt
+
+networks:
+   postgres_db_net:
+     external: true
+   flibusta_net:
+     external: true

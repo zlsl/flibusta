@@ -71,16 +71,16 @@ $cols = '';
 $fcontent .= '<div class="btn-group mt-1 me-1" role="group">';
 if (isset($_SESSION['fb2'])) {
 	$filter .= "AND filetype='fb2' ";
-	$fcontent .= "<a class='btn bg-dark text-white bg-opacity-90 text-white' href='/?fb2'>Только FB2</a> ";
+	$fcontent .= "<a class='btn bg-dark text-white bg-opacity-90 text-white' href='$webroot/?fb2'>Только FB2</a> ";
 } else {
-	$fcontent .= "<a class='btn bg-dark text-white bg-opacity-50 text-white' href='/?fb2=1'>Все форматы</a> ";
+	$fcontent .= "<a class='btn bg-dark text-white bg-opacity-50 text-white' href='$webroot/?fb2=1'>Все форматы</a> ";
 }
 
 if (isset($_SESSION['ru'])) {
 	$filter .= "AND lang='ru' ";
-	$fcontent .= "<a class='btn bg-success text-white bg-opacity-90 text-white' href='/?ru'>На русском</a> ";
+	$fcontent .= "<a class='btn bg-success text-white bg-opacity-90 text-white' href='$webroot/?ru'>На русском</a> ";
 } else {
-	$fcontent .= "<a class='btn bg-success text-white bg-opacity-50 text-white' href='/?ru=1'>Все языки</a> ";
+	$fcontent .= "<a class='btn bg-success text-white bg-opacity-50 text-white' href='$webroot/?ru=1'>Все языки</a> ";
 }
 $fcontent .= '</div>';
 
@@ -97,9 +97,9 @@ if (isset($_SESSION['filter_author'])) {
 
 	$fcontent .= "<div class='badge rounded-pill author'>";
 	if ($a->file != '') {
-		$fcontent .= "<img class='rounded-circle contact' src='/extract_author.php?id=$a->avtorid' />";
+		$fcontent .= "<img class='rounded-circle contact' src='$webroot/extract_author.php?id=$a->avtorid' />";
 	}
-	$fcontent .= "<a href='/?aid'>$a->lastname $a->middlename $a->firstname $a->nickname</a> <i class='fas fa-times-circle'></i></div> ";
+	$fcontent .= "<a href='$webroot/?aid'>$a->lastname $a->firstname $a->middlename $a->nickname</a> <i class='fas fa-times-circle'></i></div> ";
 }
 
 if (isset($_SESSION['filter_genre'])) {
@@ -112,7 +112,7 @@ if (isset($_SESSION['filter_genre'])) {
 	$g = $stmt->fetch();
 
 	$fcontent .= "<div class='badge bg-success p-1 text-white'>";
-	$fcontent .= "<a class='text-white' href='/?xgid=$g->genreid'>$g->genremeta: $g->genredesc <i class='fas fa-times-circle'></i></a></div> ";
+	$fcontent .= "<a class='text-white' href='$webroot/?xgid=$g->genreid'>$g->genremeta: $g->genredesc <i class='fas fa-times-circle'></i></a></div> ";
 }
 
 if (isset($_SESSION['filter_xgenre'])) {
@@ -124,7 +124,7 @@ if (isset($_SESSION['filter_xgenre'])) {
 	$xg = $stmt->fetch();
 
 	$fcontent .= "<div class='badge bg-secondary p-1 text-white'>";
-	$fcontent .= "<a style='text-decoration: line-through;' class='text-white' href='/?xgid'>$xg->genremeta: $xg->genredesc <i class='fas fa-times-circle'></i></a></div> ";
+	$fcontent .= "<a style='text-decoration: line-through;' class='text-white' href='$webroot/?xgid'>$xg->genremeta: $xg->genredesc <i class='fas fa-times-circle'></i></a></div> ";
 }
 
 
@@ -140,7 +140,7 @@ if (isset($_SESSION['filter_series'])) {
 	$s = $stmt->fetch();
 
 	$fcontent .= "<div class='badge bg-danger p-1 text-white'>";
-	$fcontent .= "<a class='text-white' href='/?sid'>$s->seqname <i class='fas fa-times-circle'></i></a></div> ";
+	$fcontent .= "<a class='text-white' href='$webroot/?sid'>$s->seqname <i class='fas fa-times-circle'></i></a></div> ";
 	$order = "s.seqnumb, $order";
 	$seqname = $s->seqname;
 	$seqid = $_SESSION['filter_series'];
@@ -151,18 +151,17 @@ if (isset($_SESSION['search'])) {
 	$join .= 'LEFT JOIN libbook_ts USING(bookid) ';
 
 	$fcontent .= "<div class='badge bg-success p-1 text-white'>";
-	$fcontent .= "<a class='text-white' href='/?q'>" . $_SESSION['search'] . " <i class='fas fa-times-circle'></i></a></div> ";
+	$fcontent .= "<a class='text-white' href='$webroot/?q'>" . $_SESSION['search'] . " <i class='fas fa-times-circle'></i></a></div> ";
 }
 
 if (isset($_SESSION['filter_series'])) {
-	$fcontent .= "<a class='btn btn-sm btn-info float-end' href='/?fav_seq=$seqid'>$seqname в Избранное</a> ";
+	$fcontent .= "<a class='btn btn-sm btn-info float-end' href='$webroot/?fav_seq=$seqid'>$seqname в Избранное</a> ";
 }
 
-
-
 echo "<div class='block rounded' style='margin-bottom:8px;'>";
+echo "<form action='$webroot/'>";
 ?>
-<form action='/'>
+
 <div class="input-group mb-3">
    <input name="q" type="text" class="form-control" placeholder="Поиск по названию" aria-label="Поиск серии" aria-describedby="basic-addon2">
    <div class="input-group-append">
@@ -262,7 +261,7 @@ while ($book = $stmt->fetch()) {
 	if ($c > 10) {
 		break;
 	}
-	book_info_pg($book);
+	book_info_pg($book, $webroot);
 }
 
 show_gpager(ceil($cnt / RECORDS_PAGE), 5);

@@ -1,5 +1,8 @@
-<script src="/js/djvu.js"></script>
-<script src="/js/djvu_viewer.js"></script>
+<?php
+include_once(ROOT_PATH . "webroot.php");
+echo "<script src='$webroot/js/djvu.js'></script>\n";
+echo "<script src='$webroot/js/djvu_viewer.js'></script>\n";
+?>
 <script>
 window.ViewerInstance = new DjVu.Viewer();
 window.ViewerInstance.render(

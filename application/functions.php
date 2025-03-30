@@ -98,23 +98,23 @@ function to_pg_array($set) {
 }
 
 
-function book_small_pg($book, $full = false) {
+function book_small_pg($book, $webroot='',$full = false) {
 	global $dbh, $user_uuid;
 	if (!isset($book->bookid)) {
 		return;
 	}
 	echo "<div class='col-sm-2 col-6 mb-3'>";
 	echo "<div style='height: 100%' class='cover rounded text-center d-flex align-items-end flex-column'>";
-	echo "<a class='w-100' href='/book/view/$book->bookid'>";
-	echo "<img class='w-100 card-image rounded-top' src='/extract_cover.php?id=$book->bookid&small' />";
+	echo "<a class='w-100' href='$webroot/book/view/$book->bookid'>";
+	echo "<img class='w-100 card-image rounded-top' src='$webroot/extract_cover.php?id=$book->bookid&small' />";
 
 	$dt =DateTime::createFromFormat('Y-m-d H:i:se', $book->time)->format('Y-m-d');
 	if (trim($book->filetype) == 'fb2') {
 		$ft = 'success';
-		$fhref = "/fb2.php?id=$book->bookid";
+		$fhref = "$webroot/fb2.php?id=$book->bookid";
 	} else {
 		$ft = 'secondary';
-		$fhref = "/usr.php?id=$book->bookid";
+		$fhref = "$webroot/usr.php?id=$book->bookid";
 	}
 
 	if ($book->year != 0) {
@@ -145,27 +145,27 @@ function book_small_pg($book, $full = false) {
 	echo "</div></div></div>\n";
 }
 
-function book_info_pg($book, $full = false) {
+function book_info_pg($book, $webroot = '', $full = false) {
 	global $dbh, $user_uuid;
 	if (!isset($book->bookid)) {
 		return;
 	}
 	echo "<div class='hic card mb-3' itemscope='' itemtype='http://schema.org/Book'>";
 //	echo "<div class='card-header'>";
-	echo "<h4 class='rounded-top' style='background: #d0d0d0;'><a class='book-link' href='/book/view/$book->bookid'><i class='fas'></i> $book->title</h4></a>";
+	echo "<h4 class='rounded-top' style='background: #d0d0d0;'><a class='book-link' href='$webroot/book/view/$book->bookid'><i class='fas'></i> $book->title</h4></a>";
 //	echo "</div>";
 	echo "<div class='card-body'>";
 	echo "<div class='row'>";
 	echo "<div class='col-sm-2'>";
-	echo "<img class='w-100 card-image rounded cover' src='/extract_cover.php?id=$book->bookid&small' />";
+	echo "<img class='w-100 card-image rounded cover' src='$webroot/extract_cover.php?id=$book->bookid&small' />";
 
 	$dt =DateTime::createFromFormat('Y-m-d H:i:se', $book->time)->format('Y-m-d');
 	if (trim($book->filetype) == 'fb2') {
 		$ft = 'success';
-		$fhref = "/fb2.php?id=$book->bookid";
+		$fhref = "$webroot/fb2.php?id=$book->bookid";
 	} else {
 		$ft = 'secondary';
-		$fhref = "/usr.php?id=$book->bookid";
+		$fhref = "$webroot/usr.php?id=$book->bookid";
 	}
 
 	if ($book->year != 0) {
@@ -206,9 +206,9 @@ function book_info_pg($book, $full = false) {
 	while ($a = $stmt->fetch()) {
 		echo "<div class='badge rounded-pill author'>";
 		if ($a->file != '') {
-			echo "<img class='rounded-circle contact' src='/extract_author.php?id=$a->avtorid' />";	
+			echo "<img class='rounded-circle contact' src='$webroot/extract_author.php?id=$a->avtorid' />";	
 		}
-		echo "<a href='/author/view/$a->avtorid'>$a->lastname $a->middlename $a->firstname $a->nickname</a>";
+		echo "<a href='$webroot/author/view/$a->avtorid'>$a->lastname $a->middlename $a->firstname $a->nickname</a>";
 		echo "</div>";
 	}
 	echo "</div>";
@@ -220,7 +220,7 @@ function book_info_pg($book, $full = false) {
 		WHERE BookId=$book->bookid");
 	$genres->execute();
 	while ($g = $genres->fetch()) {
-		echo "<a class='badge bg-success p-1 text-white' href='/?gid=$g->genreid'>$g->genredesc</a> ";
+		echo "<a class='badge bg-success p-1 text-white' href='$webroot/?gid=$g->genreid'>$g->genredesc</a> ";
 	}
 	echo "</div>";
 	
@@ -231,7 +231,7 @@ function book_info_pg($book, $full = false) {
 	$seq->bindParam(":id", $book->bookid);
 	$seq->execute();
 	while ($s = $seq->fetch()) {
-		echo "<a class='badge bg-danger p-1 text-white' href='/?sid=$s->seqid'>$s->seqname ";
+		echo "<a class='badge bg-danger p-1 text-white' href='$webroot/?sid=$s->seqid'>$s->seqname ";
 		if ($s->seqnumb > 0) {
 			echo " $s->seqnumb";
 		}
@@ -376,9 +376,9 @@ function transliterate($string){
 }
 
 
-function stars($rating) {
-    $fullStar = '<img alt="1" class="star" src="/i/s1.png" />';
-    $emptyStar = '<img alt="0" class="star" src="/i/s0.png" />';
+function stars($rating, $webroot) {
+    $fullStar = '<img alt="1" class="star" src="'.$webroot.'/i/s1.png" />';
+    $emptyStar = '<img alt="0" class="star" src="'.$webroot.'/i/s0.png" />';
     $rating = $rating <= 5?$rating:5;
     $fullStarCount = (int)$rating;
     $emptyStarCount = 5 - $fullStarCount;
@@ -426,14 +426,20 @@ function clean_str($input) {
 }
 
 /***************************************************************************/
-function decode_gurl($mobile = false)  {
+function decode_gurl($webroot,$mobile = false)  {
   global $last_modified, $url, $robot;
   global $sex_post;
 
+ 
   $urlx = parse_url(urldecode($_SERVER['REQUEST_URI']));
 
-  list($x, $module, $action, $var1, $var2, $var3) = array_pad(explode('/', $urlx['path']), 6, null);
-
+  //remove leading webroot e.g. http://192.168.1.101/flibusta/authors/index.php should produce module= authors
+  // note this assumes path is not utf-8
+  $path = $urlx['path'];
+  if (!empty($webroot) && str_starts_with($path,$webroot) ) {
+		$path = substr($path, strlen($webroot));
+  }
+  list($x, $module, $action, $var1, $var2, $var3) = array_pad(explode('/', $path), 6, null);
   $url = new stdClass();
 
   $url->mod = safe_str($module);
@@ -557,7 +563,7 @@ function formatSizeUnits($bytes)
         return $bytes;
     }
 
-function opds_book($b) {
+function opds_book($b,$webroot = '') {
 	global $dbh;
 	echo "\n<entry> <updated>" . $b->time . "</updated>";
 	echo " <id>tag:book:$b->bookid</id>";
@@ -577,7 +583,7 @@ function opds_book($b) {
 	$genres->bindParam(":id", $b->bookid);
 	$genres->execute();
 	while ($g = $genres->fetch()) {
-		echo "<category term='/subject/" . urlencode($g->genrecode) . "' label='$g->genredesc'/>";
+		echo "<category term='$webroot/subject/" . urlencode($g->genrecode) . "' label='$g->genredesc'/>";
 	}
 
 	$sq = '';
@@ -592,7 +598,7 @@ function opds_book($b) {
 			$ssq .= " ($s->seqnumb) ";
 		}
 		$sq .= $ssq;
-		echo " <link href='/opds/list?seq_id=".$s->seqid."' rel='related' type='application/atom+xml' title='Все книги серии &quot;$ssq&quot;' />";
+		echo " <link href='$webroot/opds/list?seq_id=".$s->seqid."' rel='related' type='application/atom+xml' title='Все книги серии &quot;$ssq&quot;' />";
 	}
 	if ($sq != '') {
 		$sq = "Сборник: $sq";
@@ -613,7 +619,7 @@ function opds_book($b) {
 	echo "</author>";
 	$au->execute();
 	while ($a = $au->fetch()) {
-		echo "\n <link href='/opds/list?author_id=$a->avtorid' rel='related' type='application/atom+xml' title='Все книги автора $a->lastname $a->firstname $a->middlename' />";
+		echo "\n <link href='$webroot/opds/list?author_id=$a->avtorid' rel='related' type='application/atom+xml' title='Все книги автора $a->lastname $a->firstname $a->middlename' />";
 	}
 	echo " <dc:language>" . trim($b->lang) . "</dc:language>";
 	if ($b->year > 0) {
@@ -637,15 +643,15 @@ function opds_book($b) {
 	echo "\n Размер: " . formatSizeUnits($b->filesize);
 	echo "\n </summary>";
 
-	echo "\n <link rel='http://opds-spec.org/image/thumbnail' href='/extract_cover.php?id=$b->bookid' type='image/jpeg'/>";
-	echo "\n <link rel='http://opds-spec.org/image' href='/extract_cover.php?id=$b->bookid' type='image/jpeg'/>";
+	echo "\n <link rel='http://opds-spec.org/image/thumbnail' href='$webroot/extract_cover.php?id=$b->bookid' type='image/jpeg'/>";
+	echo "\n <link rel='http://opds-spec.org/image' href='$webroot/extract_cover.php?id=$b->bookid' type='image/jpeg'/>";
 	if (trim($b->filetype) == 'fb2') {
 		$ur = 'fb2';
 	} else {
 		$ur = 'usr';
 	}
-	echo "\n <link href='/$ur.php?id=$b->bookid' rel='http://opds-spec.org/acquisition/open-access' type='application/" . trim($b->filetype) . "' />";
-	echo "\n <link href='/book/view/$b->bookid' rel='alternate' type='text/html' title='Книга на сайте' />";
+	echo "\n <link href='$webroot/$ur.php?id=$b->bookid' rel='http://opds-spec.org/acquisition/open-access' type='application/" . trim($b->filetype) . "' />";
+	echo "\n <link href='$webroot/book/view/$b->bookid' rel='alternate' type='text/html' title='Книга на сайте' />";
 
 	echo "</entry>\n";
 }

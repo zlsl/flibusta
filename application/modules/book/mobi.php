@@ -1,4 +1,5 @@
-<script src="/js/mobi.min.js"></script>
+<?php 
+echo "<script src='$webroot/js/mobi.min.js'></script>\n"; ?>
 <script>
 var reader = new FileReader();
 

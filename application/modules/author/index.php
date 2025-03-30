@@ -1,4 +1,5 @@
 <?php
+include_once(ROOT_PATH . "webroot.php");
 $stmt = $dbh->prepare("SELECT * FROM libavtorname LEFT JOIN libapics USING(AvtorId) WHERE avtorid=:id");
 $stmt->bindParam(":id", $url->var1);
 $stmt->execute();
@@ -10,9 +11,9 @@ echo "<div class='card-body'><div class='row'>";
 
 echo "<div class='col-sm-2 mb-3'>";
 if (isset($a->file)) {
-	echo "<img src='/extract_author.php?id=$a->avtorid' style='width: 100%;' class='card-image' /><br />";	
+	echo "<img src='$webroot/extract_author.php?id=$a->avtorid' style='width: 100%;' class='card-image' /><br />";	
 }
-echo "<a class='btn btn-primary mt-2 w-100' href='/?aid=$a->avtorid'>Книги автора</a>";
+echo "<a class='btn btn-primary mt-2 w-100' href='$webroot/?aid=$a->avtorid'>Книги автора</a>";
 
 try {
 	$stmt = $dbh->prepare("SELECT COUNT(*) cnt FROM fav WHERE user_uuid=:uuid AND avtorid=:id");
@@ -21,9 +22,9 @@ try {
 	$stmt->execute();
 	$is_fav = ($stmt->fetch()->cnt > 0);
 	if (!$is_fav) {
-		echo "<a class='btn btn-secondary mt-2 w-100' href='/?fav_author=$a->avtorid'>В избранное</a>";
+		echo "<a class='btn btn-secondary mt-2 w-100' href='$webroot/?fav_author=$a->avtorid'>В избранное</a>";
 	} else {
-		echo "<a class='btn btn-warning mt-2 w-100' href='/?unfav_author=$a->avtorid'>Из избранного</a>";
+		echo "<a class='btn btn-warning mt-2 w-100' href='$webroot/?unfav_author=$a->avtorid'>Из избранного</a>";
 	}
 } catch (PDOException $e) {
 	//

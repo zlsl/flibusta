@@ -1,5 +1,7 @@
-<script src="/js/jszip.min.js"></script>
-<script src="/js/epub.min.js"></script>
+<?php
+echo "<script src='$webroot/js/jszip.min.js'></script>";
+echo "<script src='$webroot/js/epub.min.js'></script>";
+?>
 <script>
 const book = ePub({ replacements: 'blobUrl' });
 book.open(url, 'epub');

@@ -1,4 +1,5 @@
-<div class="block rounded" style="margin-bottom:8px;"><form action="/favlist/">
+<?php 
+echo '<div class="block rounded" style="margin-bottom:8px;"><form action="'.$webroot.'/favlist/">'; ?>
 <div class="input-group mb-3">
    <input name="new_uuid" type="text" class="form-control" placeholder="Новая полка" aria-label="Новая полка" aria-describedby="basic-addon2">
    <div class="input-group-append">
@@ -17,7 +18,7 @@ while ($a = $stmt->fetch()) {
 	echo "<div class='card mb-3'>";
 
 	echo "<div class='card-header'>";
-	echo "<a href='/fav/?login_uuid=$a->user_uuid'>$a->name</a>";
+	echo "<a href='$webroot/fav/?login_uuid=$a->user_uuid'>$a->name</a>";
 	echo "</div>";
 
 	echo "<div class='card-body'>";
@@ -33,7 +34,7 @@ while ($a = $stmt->fetch()) {
 	echo "</div>";
 
 	echo "<div class='card-footer'>";
-	echo "<a class='btn btn-danger btn-sm float-end' href='/favlist/?delete_uuid=$a->user_uuid'>Удалить</a>";
+	echo "<a class='btn btn-danger btn-sm float-end' href='$webroot/favlist/?delete_uuid=$a->user_uuid'>Удалить</a>";
 	echo "</div>";
 
 	echo "</div>";
