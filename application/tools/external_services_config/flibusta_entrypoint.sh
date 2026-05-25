@@ -48,7 +48,7 @@ if [ `$SQL_CMD -c "select 1 from pg_roles where rolname='flibusta'"  | wc -l` -e
         exit 1
     fi
 
-    psql -h $FLIBUSTA_DBHOST -d $POSTGRES_ADMIN_USER -U $POSTGRES_ADMIN_USER -v FLIBUSTA_DBUSER="$FLIBUSTA_DBUSER"  -v FLIBUSTA_DBPASSWORD="$FLIBUSTA_DBPASSWORD" -v FLIBUSTA_DBNAME="$FLIBUSTA_DBNAME" -f /application/tools/external_services_config/external_postgres_init.sql
+    psql -h $FLIBUSTA_DBHOST -d postgres -U $POSTGRES_ADMIN_USER -v FLIBUSTA_DBUSER="$FLIBUSTA_DBUSER"  -v FLIBUSTA_DBPASSWORD="$FLIBUSTA_DBPASSWORD" -v FLIBUSTA_DBNAME="$FLIBUSTA_DBNAME" -f /application/tools/external_services_config/external_postgres_init.sql
     #restore flibusta password
     export PGPASSWORD=$FLIBUSTA_DBPASSWORD
 
@@ -59,3 +59,4 @@ if [ `$SQL_CMD -c "select 1 from pg_roles where rolname='flibusta'"  | wc -l` -e
 fi
 
 exec php-fpm
+
