@@ -6,7 +6,7 @@ echo <<< __HTML
 <Description>Библиотека</Description>
 <Tags/>
 <Contact/>
-<Url type="application/atom+xml" indexOffset="0" pageOffset="0" template="$webroot/opds/search?searchTerm={searchTerms}&searchType=books&pageNumber={startPage?}"/>
+<Url type="application/atom+xml" indexOffset="0" pageOffset="0" template="$webroot/opds/search?searchTerm={searchTerms}&amp;searchType=books&amp;pageNumber={startPage?}"/>
 <SearchForm>$webroot/opds/search</SearchForm>
 <LongName>Библиотека</LongName>
 <Image>/favicon.ico</Image>

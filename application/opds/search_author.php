@@ -7,7 +7,7 @@ echo <<< _XML
  <updated>$cdt</updated>
  <icon>/favicon.ico</icon>
  <link href="$webroot/opds-opensearch.xml.php" rel="search" type="application/opensearchdescription+xml" />
- <link href="$webroot/opds/authorsindex?letters={searchTerm}" rel="search" type="application/atom+xml" />
+ <link href="$webroot/opds/authorsindex?letters={searchTerms}" rel="search" type="application/atom+xml" />
  <link href="$webroot/opds" rel="start" type="application/atom+xml;profile=opds-catalog" />
 
 
@@ -15,14 +15,15 @@ echo <<< _XML
  <id>tag:search:author</id>
  <title>Поиск авторов</title>
  <content type="text">Поиск авторов по фамилии</content>
- <link href="$webroot/opds/authorsindex?letters={searchTerm}" type="application/atom+xml;profile=opds-catalog" />
+ <link href="$webroot/opds/authorsindex?letters={searchTerms}" type="application/atom+xml;profile=opds-catalog" />
 </entry>
 _XML;
 
-$q = $_GET['q'];
+$q = trim($_GET['q'] ?? $_GET['searchTerm'] ?? $_GET['searchTerms'] ?? '');
 
 if ($q == '') {
-	die(':(');
+	echo '</feed>';
+	return;
 }
 $queryParam = $q . '%';
 $authors = $dbh->prepare("SELECT *, 
@@ -38,7 +39,7 @@ while ($a = $authors->fetch()) {
 	if ($a->cnt > 0) {
 		echo "\n<entry> <updated>$cdt</updated>";
 		echo " <id>tag:author:$a->avtorid</id>";
-		echo " <title>$a->lastname $a->firstname $a->middlename $a->nickname</title>";
+		echo " <title>" . htmlspecialchars("$a->lastname $a->firstname $a->middlename $a->nickname") . "</title>";
 
 		$stmt = $dbh->query("SELECT COUNT(*) as cnt FROM libbook,libavtor WHERE deleted='0' AND libavtor.bookid=libbook.bookid AND libavtor.avtorid=$a->avtorid");
 		$stmt->execute();

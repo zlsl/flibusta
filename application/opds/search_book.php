@@ -11,24 +11,35 @@ echo <<< _XML
  <link href="$webroot/opds" rel="start" type="application/atom+xml;profile=opds-catalog" />
 _XML;
 
-$q = $_GET['q'];
+$q = trim($_GET['q'] ?? $_GET['searchTerm'] ?? $_GET['searchTerms'] ?? '');
 $get = "?q=$q";
 
 if ($q == '') {
-	die(':(');
+	echo '</feed>';
+	return;
 }
 
-//$filter2 = "AND libbook.Title LIKE " . DB::es('%' . $q . '%');
-
-$books = $dbh->prepare("SELECT DISTINCT BookId, libbook.Title as BookTitle,
+$books = $dbh->prepare("SELECT DISTINCT libbook.BookId, libbook.Title as BookTitle,
         (SELECT Body FROM libbannotations WHERE BookId=libbook.BookId LIMIT 1) as Body
 		FROM libbook
-		JOIN libgenre USING(BookId) 
-		WHERE deleted='0' AND libbook.Title LIKE :q
-		GROUP BY BookId, BookTitle, Body
+		LEFT JOIN libavtor ON libavtor.BookId=libbook.BookId
+		LEFT JOIN libavtorname ON libavtorname.AvtorId=libavtor.AvtorId
+		WHERE libbook.deleted='0' AND (
+			libbook.Title ILIKE :contains_title OR
+			libavtorname.LastName ILIKE :prefix_lastname OR
+			libavtorname.FirstName ILIKE :prefix_firstname OR
+			libavtorname.MiddleName ILIKE :prefix_middlename OR
+			libavtorname.NickName ILIKE :contains_nickname
+		)
+		ORDER BY BookTitle
 		LIMIT 100");
-		$param = '%'.$q.'%';
-$books->bindParam(":q", $param);
+$contains = '%'.$q.'%';
+$prefix = $q.'%';
+$books->bindParam(":contains_title", $contains);
+$books->bindParam(":prefix_lastname", $prefix);
+$books->bindParam(":prefix_firstname", $prefix);
+$books->bindParam(":prefix_middlename", $prefix);
+$books->bindParam(":contains_nickname", $contains);
 $books->execute();
 
 while ($b = $books->fetchObject()) {
@@ -43,7 +54,7 @@ while ($b = $books->fetchObject()) {
 	}
 	$authors = null;
 
-	echo "<author> <name>$as</name>";
+	echo "<author> <name>" . htmlspecialchars($as) . "</name>";
 	echo " <uri>/a/id</uri>";
 	echo "</author>";
 	echo " <content type='text/html'>" . htmlspecialchars($b->body ?? '') . "</content>";

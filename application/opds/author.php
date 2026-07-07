@@ -33,7 +33,7 @@ if ($a = $stmt->fetchObject()){
         <updated>$cdt</updated>
         <icon>/favicon.ico</icon>
         <link href="$webroot/opds-opensearch.xml.php" rel="search" type="application/opensearchdescription+xml" />
-        <link href="$webroot/opds/search?by=author&searchTerm={searchTerms}" rel="search" type="application/atom+xml" />
+        <link href="$webroot/opds/search?by=author&amp;searchTerm={searchTerms}" rel="search" type="application/atom+xml" />
         <link href="$webroot/opds" rel="start" type="application/atom+xml;profile=opds-catalog" />
         _XML;
         $sequences = $dbh->prepare("SELECT distinct sn.seqid seqid, sn.seqname seqname
